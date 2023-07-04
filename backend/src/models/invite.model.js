@@ -39,6 +39,10 @@ const inviteSchema = new Schema({
         enum: ['read','edit','delete'],
         required: true
     }],
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     token: {
         type: String,
     }

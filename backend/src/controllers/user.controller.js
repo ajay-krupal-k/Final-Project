@@ -1,4 +1,5 @@
 const User = require('../models/user.model')
+const Invite = require('../models/invite.model')
 const mongoose = require('mongoose')
 const { ObjectId } = require('mongodb')
 
@@ -33,10 +34,12 @@ const createUser = async (req, res) => {
 
     const name = req.name
     const email = req.email
+    const access = req.access
 
     try {
         if (password === cpassword) {
-            const user = await User.create({ name, email, password })
+            const user = await User.create({ name, email, password, access })
+            const invite = await Invite.updateOne({email: email},{$set: {userId: new ObjectId(user._id)}})
             const token = await user.generateAuthToken()
             res.status(200).json({ user, token })
         } else {

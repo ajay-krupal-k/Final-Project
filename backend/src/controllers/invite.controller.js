@@ -5,33 +5,34 @@ const { ObjectId } = require('mongodb')
 const postmark = require("postmark");
 
 const Invite = require('../models/invite.model')
+const User = require('../models/user.model')
 
 const client = new postmark.ServerClient(process.env.API_KEY);
 
-const getInvites = async (req,res) => {
+const getInvites = async (req, res) => {
     const invites = await Invite.find({})
 
     res.status(200).json(invites)
 }
 
-const getInvite = async (req,res) => {
+const getInvite = async (req, res) => {
 
     const id = req.params.id
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'Invalid User'})
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Invalid User' })
     }
 
-    const invite = await Invite.findById({_id: new ObjectId(id)})
+    const invite = await Invite.findById({ _id: new ObjectId(id) })
 
-    if(!invite) {
-        return res.status(404).json({error: 'Invalid User'})
+    if (!invite) {
+        return res.status(404).json({ error: 'Invalid User' })
     }
 
     res.status(200).json(invite)
 }
 
-const createInvite = async (req,res) => {
+const createInvite = async (req, res) => {
     const { name, email, status, access, permissions } = req.body
 
     try {
@@ -53,41 +54,43 @@ const createInvite = async (req,res) => {
             }
         });
 
-        res.status(200).json({invite, token})
-    } catch(error) {
+        res.status(200).json({ invite, token })
+    } catch (error) {
         res.status(400).json({ error: error.message })
     }
 }
 
-const updateInvite = async (req,res) => {
+const updateInvite = async (req, res) => {
     const id = req.params.id
-    
+
     const updates = req.body
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'Invalid User'})
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Invalid User' })
     }
 
     try {
-        const invite = await Invite.updateOne({_id: new ObjectId(id), $set: updates})
+        const invite = await Invite.updateOne({ _id: new ObjectId(req.params.id)},{$set: updates})
+        const userInvite = await Invite.findById({_id: new ObjectId(id)})
+        const user = await User.updateOne({_id: userInvite.userId}, {$set: updates})
         res.status(200).json(invite)
-    } catch(error) {
-        res.status(404).json({error: error.message})
+    } catch (error) {
+        res.status(404).json({ error: error.message })
     }
 }
 
-const deleteInvite = async (req,res) => {
+const deleteInvite = async (req, res) => {
     const id = req.params.id
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'Invalid User'})
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Invalid User' })
     }
 
     try {
-        const invite = await Invite.deleteOne({_id: new ObjectId(id)})
+        const invite = await Invite.deleteOne({ _id: new ObjectId(id) })
         res.status(200).json(invite)
-    } catch(error) {
-        res.status(404).json({error: error.message})
+    } catch (error) {
+        res.status(404).json({ error: error.message })
     }
 
 }

@@ -17,14 +17,16 @@ const invite = async (req,res,next) => {
         const decoded = jwt.verify(token,process.env.PRIVATE_KEY)
         const user = await Invite.findOne({email: decoded.email, token: token})
 
-        console.log(user)
-
         if(!user){
             throw new Error('Not a valid link')
         }
 
+        user.status = "Accepted"
+        await user.save()
+
         req.name = user.name
         req.email = decoded.email
+        req.access = user.access
 
         next()
     } catch (error) {
