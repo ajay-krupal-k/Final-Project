@@ -13,10 +13,10 @@ const router = express.Router()
 
 router.get("/", auth, admin, getUsers)
 
-router.get("/:id", auth, getUser)
+router.get("/:id", auth, admin, getUser)
 
-router.patch("/:id", auth, updateUser)
+router.patch("/:id", auth, admin, updateUser)
 
-router.delete("/:id", auth, deleteUser)
+router.delete("/:id", auth, admin,deleteUser)
 
 module.exports = router

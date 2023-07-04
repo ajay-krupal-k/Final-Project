@@ -7,10 +7,11 @@ const {
     logoutAll 
 } = require('../controllers/user.controller')
 const auth = require('../middleware/auth.middleware')
+const invite = require('../middleware/invite.middleware')
 
 const router = express.Router()
 
-router.post("/register",createUser)
+router.post("/register", invite, createUser)
 
 router.post("/login", loginUser)
 

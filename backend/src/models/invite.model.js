@@ -1,5 +1,8 @@
+require('dotenv').config()
+
 const mongoose = require('mongoose')
 const validator = require('validator')
+const jwt = require('jsonwebtoken')
 
 const Schema = mongoose.Schema
 
@@ -35,7 +38,22 @@ const inviteSchema = new Schema({
         type: String,
         enum: ['read','edit','delete'],
         required: true
-    }]
+    }],
+    token: {
+        type: String,
+    }
 }, {timestamps: true})
+
+inviteSchema.methods.generateToken = async function () {
+
+    const user = this;
+
+    const token = jwt.sign({email: user.email}, process.env.PRIVATE_KEY, { expiresIn: '7 days' });
+
+    user.token = token
+
+    await user.save()
+    return token
+}
 
 module.exports = mongoose.model('Invitation',inviteSchema)

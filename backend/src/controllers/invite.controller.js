@@ -1,7 +1,12 @@
+require('dotenv').config()
+
 const mongoose = require('mongoose')
 const { ObjectId } = require('mongodb')
+const postmark = require("postmark");
 
 const Invite = require('../models/invite.model')
+
+const client = new postmark.ServerClient(process.env.API_KEY);
 
 const getInvites = async (req,res) => {
     const invites = await Invite.find({})
@@ -31,7 +36,24 @@ const createInvite = async (req,res) => {
 
     try {
         const invite = await Invite.create({ name, email, status, access, permissions })
-        res.status(200).json(invite)
+        const token = await invite.generateToken()
+        const action_url = `http://localhost:5000/register?token=${token}`
+
+        client.sendEmailWithTemplate({
+            "From": "cajig23354@extemer.com",
+            "To": "cajig23354@extemer.com",
+            "TemplateAlias": "user-invitation",
+            "TemplateModel": {
+                "product_url": "http://localhost:5000/login",
+                "product_name": "Administrator App",
+                "name": name,
+                "action_url": action_url,
+                "company_name": "Administrator App",
+                "company_address": "Bangalore, Karnataka, India"
+            }
+        });
+
+        res.status(200).json({invite, token})
     } catch(error) {
         res.status(400).json({ error: error.message })
     }

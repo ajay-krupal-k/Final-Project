@@ -29,7 +29,10 @@ const getUser = async (req, res) => {
 
 // POST a new user
 const createUser = async (req, res) => {
-    const { name, email, password } = req.body
+    const { password } = req.body
+
+    const name = req.name
+    const email = req.email
 
     try {
         const user = await User.create({ name, email, password })
