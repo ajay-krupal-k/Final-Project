@@ -29,15 +29,19 @@ const getUser = async (req, res) => {
 
 // POST a new user
 const createUser = async (req, res) => {
-    const { password } = req.body
+    const { password, cpassword } = req.body
 
     const name = req.name
     const email = req.email
 
     try {
-        const user = await User.create({ name, email, password })
-        const token = await user.generateAuthToken()
-        res.status(200).json({user, token})
+        if (password === cpassword) {
+            const user = await User.create({ name, email, password })
+            const token = await user.generateAuthToken()
+            res.status(200).json({ user, token })
+        } else {
+            throw new Error("Check your confirm password")
+        }
     }
     catch (error) {
         res.status(400).json({ error: error.message })
@@ -93,28 +97,28 @@ const loginUser = async (req, res) => {
 }
 
 // Logout a user
-const logoutUser = async (req,res) => {
+const logoutUser = async (req, res) => {
 
-    try{
+    try {
         req.user.tokens = req.user.tokens.filter((token => {
             return token.token !== req.token
         }))
         await req.user.save()
 
-        res.status(200).json({message: 'Log Out Successful'})
-    } catch(error) {
-        res.status(500).json({message: 'Error Logging Out'})
+        res.status(200).json({ message: 'Log Out Successful' })
+    } catch (error) {
+        res.status(500).json({ message: 'Error Logging Out' })
     }
 }
 
 // Logout of all sessions
-const logoutAll = async (req,res) => {
-    try{
+const logoutAll = async (req, res) => {
+    try {
         req.user.tokens = []
         await req.user.save()
-        res.status(200).json({message: 'Logged out of all sessions'})
-    } catch(error) {
-        res.status(500).json({message: 'Error Logging Out'})
+        res.status(200).json({ message: 'Logged out of all sessions' })
+    } catch (error) {
+        res.status(500).json({ message: 'Error Logging Out' })
     }
 }
 

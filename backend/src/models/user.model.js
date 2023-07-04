@@ -31,6 +31,9 @@ const userSchema = new Schema({
         min: [8, 'Password must be of minimum 8 characters'],
         trim: true
     },
+    cpassword: {
+        type: String
+    },
     role: {
         type: String,
         enum: ['user','admin'],
