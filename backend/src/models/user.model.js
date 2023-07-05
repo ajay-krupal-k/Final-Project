@@ -77,17 +77,6 @@ userSchema.methods.generateAuthToken = async function () {
     return token
 }
 
-userSchema.statics.getDetails = async function (id) {
-
-    const getUser = this.findById(id)
-
-    console.log
-
-    await getUser.populate("usraccess")
-    
-    console.log('Create User',getUser.usraccess)
-}
-
 // A static refers to the whole collection
 // Function to find User by their credentials
 userSchema.statics.findByCredentials = async function (email, password) {

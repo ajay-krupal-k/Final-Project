@@ -13,4 +13,5 @@ const channelsSchema = new Schema({
     }
 }, {timestamps: true})
 
+
 module.exports = mongoose.model('Channel',channelsSchema)

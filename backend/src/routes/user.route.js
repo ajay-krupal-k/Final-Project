@@ -13,8 +13,7 @@ const router = express.Router()
 
 router.get("/", auth, admin, getUsers)
 
-// router.get("/:id", auth, admin, getUser)
-router.get("/:id", getUser)
+router.get("/:id", auth, admin, getUser)
 
 router.patch("/:id", auth, admin, updateUser)
 

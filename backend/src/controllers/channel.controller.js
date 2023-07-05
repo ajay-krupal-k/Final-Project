@@ -25,6 +25,7 @@ const createChannel = async (req,res) => {
 
     try {
         const channel = await Channel.create({ name, description })
+        await Channel.find().populate('userId').then(p => console.log(p)).catch(error => console.log(error))
         await res.status(200).json(channel)
     } catch(error) {
         await res.status(400).json({error: error.message})

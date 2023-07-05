@@ -7,16 +7,18 @@ const {
     updateInvite,
     deleteInvite
 } = require('../controllers/invite.controller')
+const auth = require('../middleware/auth.middleware')
+const admin = require('../middleware/role.middleware')
 const router = express.Router()
 
-router.get("/", getInvites)
+router.get("/", auth, admin, getInvites)
 
-router.get("/:id", getInvite)
+router.get("/:id", auth, admin, getInvite)
 
-router.post("/", createInvite)
+router.post("/", auth, admin, createInvite)
 
-router.patch("/:id", updateInvite)
+router.patch("/:id", auth, admin, updateInvite)
 
-router.delete("/:id", deleteInvite)
+router.delete("/:id", auth, admin, deleteInvite)
 
 module.exports = router

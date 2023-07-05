@@ -20,12 +20,10 @@ const getInvite = async (req, res) => {
     const id = req.params.id
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'Invalid User' })
+        return res.status(404).json({ error: 'Invalid User ID' })
     }
 
-    const invite = await Invite.findById({ _id: new ObjectId(id) }).populate('channels').exec()
-
-    console.log(invite)
+    const invite = await Invite.findById(id)
 
     if (!invite) {
         return res.status(404).json({ error: 'Invalid User' })
