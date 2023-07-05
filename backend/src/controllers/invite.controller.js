@@ -5,6 +5,7 @@ const { ObjectId } = require('mongodb')
 const postmark = require("postmark");
 
 const Invite = require('../models/invite.model')
+const User = require('../models/user.model')
 
 const client = new postmark.ServerClient(process.env.API_KEY);
 

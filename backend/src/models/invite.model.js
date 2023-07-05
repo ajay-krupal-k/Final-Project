@@ -25,18 +25,18 @@ const inviteSchema = new Schema({
     },
     status: {
         type: String,
-        enum: ['Pending','Accepted'],
+        enum: ['Pending', 'Accepted'],
         default: 'Pending'
     },
-    access: [{
-            type: String,
-            required: true
-    }],
-    permissions: [{
-        type: String,
-        enum: ['read','edit','delete'],
+    access: {
+        type: [String],
         required: true
-    }],
+    },
+    permissions: {
+        type: [String],
+        enum: ['read', 'edit', 'delete'],
+        required: true
+    },
     token: {
         type: String,
     },
@@ -44,14 +44,14 @@ const inviteSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     }
-}, {timestamps: true})
+}, { timestamps: true })
 
 
 inviteSchema.methods.generateToken = async function () {
 
     const invite = this;
 
-    const token = jwt.sign({email: invite.email, inviteId: invite._id}, process.env.PRIVATE_KEY, { expiresIn: '7 days' });
+    const token = jwt.sign({ email: invite.email, inviteId: invite._id }, process.env.PRIVATE_KEY, { expiresIn: '7 days' });
 
     invite.token = token
 
@@ -59,4 +59,4 @@ inviteSchema.methods.generateToken = async function () {
     return token
 }
 
-module.exports = mongoose.model('Invitation',inviteSchema)
+module.exports = mongoose.model('Invitation', inviteSchema)

@@ -1,14 +1,18 @@
 const express = require('express')
 
+const {
+    getChannels,
+    createChannel,
+    deleteChannel
+} = require('../controllers/channel.controller')
 const router = express.Router()
 
 // Get all the channels
-router.get("/")
+router.get("/",getChannels)
 
 // Create a new channel
-router.post("/")
+router.post("/",createChannel)
 
-// Update a channel
-router.patch("/:id")
+router.delete("/:id",deleteChannel)
 
-router.delete("/:id")
+module.exports = router

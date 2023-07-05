@@ -20,6 +20,11 @@ const getUser = async (req, res) => {
 
     const user = await User.findById(id)
 
+    await user.populate('usraccess')
+
+    console.log(user.usraccess[0].access)
+    console.log(user.usraccess[0].permissions)
+
     if (!user) {
         return res.status(404).json({ error: 'User does not exist' })
     }
@@ -38,9 +43,14 @@ const createUser = async (req, res) => {
     try {
         if (password === cpassword) {
             const user = await User.create({ name, email, password })
-            const invite = await Invite.updateOne({email: email},{$set: {userId: user._id}})
+
+            await Invite.updateOne({email: email},{$set: {userId: user._id}})
+            const findUser = await User.findById(user._id)
+            await findUser.populate('usraccess')
+            console.log('access',findUser.usraccess[0].access)
+            console.log('permissions',findUser.usraccess[0].permissions)
+
             const token = await user.generateAuthToken()
-            await user.populate('usraccess')
             res.status(200).json({ user, token })
         } else {
             throw new Error("Check your confirm password")

@@ -9,6 +9,7 @@ const cors = require('cors')
 const authRoute = require('./src/routes/auth.route')
 const userRoute = require('./src/routes/user.route')
 const inviteRoute = require('./src/routes/invite.route')
+const channelRoute = require('./src/routes/channel.route')
 
 // creates a new express application
 const app = express()
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 app.use("", authRoute)
 app.use("/invites", inviteRoute)
 app.use("/users", userRoute)
+app.use("/channels", channelRoute)
 
 // Connecting to DB
 mongoose.connect(process.env.MONGO_URI)
@@ -41,10 +43,10 @@ mongoose.connect(process.env.MONGO_URI)
 const User = require('./src/models/user.model')
 
 const main = async function () {
-    const user = await User.findById('64a5304ffa5204878ee239a2')
+    const user = await User.findById('64a54266189d0f821a6a3c1f')
     await user.populate('usraccess')
     console.log(user.usraccess[0].access)
 
 }
 
-main()
+// main()

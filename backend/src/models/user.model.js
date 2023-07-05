@@ -44,10 +44,6 @@ const userSchema = new Schema({
             type: String,
             required: true
         }
-    }],
-    accesses : [{
-        type: Schema.Types.ObjectId,
-        ref: 'Invitation'
     }]
 }, { timestamps: true })
 
@@ -79,6 +75,17 @@ userSchema.methods.generateAuthToken = async function () {
 
     await user.save()
     return token
+}
+
+userSchema.statics.getDetails = async function (id) {
+
+    const getUser = this.findById(id)
+
+    console.log
+
+    await getUser.populate("usraccess")
+    
+    console.log('Create User',getUser.usraccess)
 }
 
 // A static refers to the whole collection
