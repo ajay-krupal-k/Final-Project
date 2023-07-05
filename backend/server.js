@@ -37,3 +37,14 @@ mongoose.connect(process.env.MONGO_URI)
     .catch((error) => {
         console.log(error.message)
     })
+
+const User = require('./src/models/user.model')
+
+const main = async function () {
+    const user = await User.findById('64a5304ffa5204878ee239a2')
+    await user.populate('usraccess')
+    console.log(user.usraccess[0].access)
+
+}
+
+main()

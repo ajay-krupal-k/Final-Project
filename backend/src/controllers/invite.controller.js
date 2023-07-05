@@ -5,7 +5,6 @@ const { ObjectId } = require('mongodb')
 const postmark = require("postmark");
 
 const Invite = require('../models/invite.model')
-const User = require('../models/user.model')
 
 const client = new postmark.ServerClient(process.env.API_KEY);
 
@@ -71,8 +70,6 @@ const updateInvite = async (req, res) => {
 
     try {
         const invite = await Invite.updateOne({ _id: new ObjectId(req.params.id)},{$set: updates})
-        const userInvite = await Invite.findById({_id: new ObjectId(id)})
-        const user = await User.updateOne({_id: userInvite.userId}, {$set: updates})
         res.status(200).json(invite)
     } catch (error) {
         res.status(404).json({ error: error.message })

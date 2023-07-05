@@ -39,17 +39,23 @@ const userSchema = new Schema({
         enum: ['user', 'admin'],
         default: 'user'
     },
-    access: [{
-        type: String,
-        required: true
-    }],
     tokens: [{
         token: {
             type: String,
             required: true
         }
+    }],
+    accesses : [{
+        type: Schema.Types.ObjectId,
+        ref: 'Invitation'
     }]
 }, { timestamps: true })
+
+userSchema.virtual('usraccess',{
+    ref: 'Invitation',
+    localField: '_id',
+    foreignField: 'userId'
+})
 
 // Methods are instances and refer to a single document
 // Method to remove details when sending back data

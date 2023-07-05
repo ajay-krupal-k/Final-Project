@@ -29,8 +29,6 @@ const inviteSchema = new Schema({
         default: 'Pending'
     },
     access: [{
-            // type: Schema.Types.ObjectId,
-            // ref: 'Channel'
             type: String,
             required: true
     }],
@@ -39,24 +37,25 @@ const inviteSchema = new Schema({
         enum: ['read','edit','delete'],
         required: true
     }],
+    token: {
+        type: String,
+    },
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    },
-    token: {
-        type: String,
     }
 }, {timestamps: true})
 
+
 inviteSchema.methods.generateToken = async function () {
 
-    const user = this;
+    const invite = this;
 
-    const token = jwt.sign({email: user.email}, process.env.PRIVATE_KEY, { expiresIn: '7 days' });
+    const token = jwt.sign({email: invite.email, inviteId: invite._id}, process.env.PRIVATE_KEY, { expiresIn: '7 days' });
 
-    user.token = token
+    invite.token = token
 
-    await user.save()
+    await invite.save()
     return token
 }
 

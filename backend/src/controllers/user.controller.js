@@ -34,13 +34,13 @@ const createUser = async (req, res) => {
 
     const name = req.name
     const email = req.email
-    const access = req.access
 
     try {
         if (password === cpassword) {
-            const user = await User.create({ name, email, password, access })
-            const invite = await Invite.updateOne({email: email},{$set: {userId: new ObjectId(user._id)}})
+            const user = await User.create({ name, email, password })
+            const invite = await Invite.updateOne({email: email},{$set: {userId: user._id}})
             const token = await user.generateAuthToken()
+            await user.populate('usraccess')
             res.status(200).json({ user, token })
         } else {
             throw new Error("Check your confirm password")
@@ -62,7 +62,7 @@ const updateUser = async (req, res) => {
     }
 
     try {
-        const user = await User.updateOne({ _id: new ObjectId(id), $set: updates })
+        const user = await User.updateOne({ _id: new ObjectId(id)}, {$set: updates })
         res.status(200).json(user)
     } catch (error) {
         res.status(404).json({ error: error.message })
