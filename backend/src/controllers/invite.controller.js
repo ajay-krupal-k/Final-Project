@@ -23,7 +23,9 @@ const getInvite = async (req, res) => {
         return res.status(404).json({ error: 'Invalid User' })
     }
 
-    const invite = await Invite.findById({ _id: new ObjectId(id) })
+    const invite = await Invite.findById({ _id: new ObjectId(id) }).populate('channels').exec()
+
+    console.log(invite)
 
     if (!invite) {
         return res.status(404).json({ error: 'Invalid User' })

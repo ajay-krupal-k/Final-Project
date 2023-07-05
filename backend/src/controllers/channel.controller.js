@@ -1,9 +1,22 @@
 const Channel = require('../models/channel.model')
+const User = require('../models/user.model')
 
 const getChannels = async (req,res) => {
-    const channels = await Channel.find({})
 
-    res.status(200).json(channels)
+    if(req.user.role === "admin"){
+        const channels = await Channel.find({})
+        res.status(200).json({channels})
+    }
+
+    const findUser = await User.findById(req.user._id)
+    await findUser.populate('usraccess')
+
+    const arr = findUser.usraccess[0].access
+
+    console.log(arr)
+
+    const channelName = await Channel.find({name: {$in: arr}})
+    res.status(200).json({channelName})
 }
 
 const createChannel = async (req,res) => {

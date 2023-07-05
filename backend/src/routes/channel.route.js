@@ -5,10 +5,11 @@ const {
     createChannel,
     deleteChannel
 } = require('../controllers/channel.controller')
+const auth = require('../middleware/auth.middleware')
 const router = express.Router()
 
 // Get all the channels
-router.get("/",getChannels)
+router.get("/", auth, getChannels)
 
 // Create a new channel
 router.post("/",createChannel)

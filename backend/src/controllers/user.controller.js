@@ -22,6 +22,9 @@ const getUser = async (req, res) => {
 
     await user.populate('usraccess')
 
+    req.access = user.usraccess[0].access
+    req.permissions = user.usraccess[0].permissions
+
     console.log(user.usraccess[0].access)
     console.log(user.usraccess[0].permissions)
 
