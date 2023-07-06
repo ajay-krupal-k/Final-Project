@@ -66,7 +66,7 @@ const createUser = async (req, res) => {
 
 // PATCH an existing user
 const updateUser = async (req, res) => {
-    const id = req.params.id
+    const { id } = req.params
 
     const updates = req.body
 

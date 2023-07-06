@@ -10,6 +10,7 @@ const authRoute = require('./src/routes/auth.route')
 const userRoute = require('./src/routes/user.route')
 const inviteRoute = require('./src/routes/invite.route')
 const channelRoute = require('./src/routes/channel.route')
+const postRoute = require('./src/routes/post.route')
 
 // creates a new express application
 const app = express()
@@ -28,6 +29,7 @@ app.use("", authRoute)
 app.use("/invites", inviteRoute)
 app.use("/users", userRoute)
 app.use("/channels", channelRoute)
+app.use("/posts", postRoute)
 
 // Connecting to DB
 mongoose.connect(process.env.MONGO_URI)

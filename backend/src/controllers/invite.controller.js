@@ -42,7 +42,7 @@ const createInvite = async (req, res) => {
 
         client.sendEmailWithTemplate({
             "From": "cajig23354@extemer.com",
-            "To": "cajig23354@extemer.com",
+            "To": email,
             "TemplateAlias": "user-invitation",
             "TemplateModel": {
                 "product_url": "http://localhost:5000/login",
