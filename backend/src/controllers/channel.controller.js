@@ -1,5 +1,6 @@
 const Channel = require('../models/channel.model')
 const User = require('../models/user.model')
+const Invite = require('../models/invite.model')
 const mongoose = require('mongoose')
 
 const getChannels = async (req, res) => {
@@ -9,18 +10,15 @@ const getChannels = async (req, res) => {
         res.status(200).json({ channels })
     }
 
-    const findUser = await User.findById(req.user._id)
-    await findUser.populate('usraccess')
-
-    const arr = findUser.usraccess[0].access
-
-    console.log(arr)
-
-    const channelName = await Channel.find({ name: { $in: arr } })
+    const userAccess = await Invite.findOne({userId: req.user._id})
+    
+    const channelName = await Channel.find({ _id: { $in: userAccess.channels } })
     res.status(200).json({ channelName })
 }
 
 const getChannel = async (req,res) => {
+    const invite = await Invite.find({ userId: req.user._id })
+
     const { id } = req.params
 
     if (!mongoose.Types.ObjectId.isValid(id)) {

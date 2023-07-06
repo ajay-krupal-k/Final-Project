@@ -44,7 +44,7 @@ const getPostsbyChannelId = async (req, res) => {
 const createPost = async (req, res) => {
     const invite = await Invite.find({ userId: req.user._id })
 
-    if ((invite[0].permissions).includes("read") || req.user.role === "admin") {
+    if ((invite[0].permissions).includes("create") || req.user.role === "admin") {
         const { title, description, channelId } = req.body
 
         try {
@@ -85,7 +85,7 @@ const updatePost = async (req, res) => {
 const deletePost = async (req, res) => {
     const invite = await Invite.find({ userId: req.user._id })
 
-    if ((invite[0].permissions).includes("edit") || req.user.role === "admin") {
+    if ((invite[0].permissions).includes("delete") || req.user.role === "admin") {
         const { id } = req.params
 
         if (!mongoose.Types.ObjectId.isValid(id)) {

@@ -33,10 +33,10 @@ const getInvite = async (req, res) => {
 }
 
 const createInvite = async (req, res) => {
-    const { name, email, status, access, permissions } = req.body
+    const { name, email, status, access, permissions, channels } = req.body
 
     try {
-        const invite = await Invite.create({ name, email, status, access, permissions })
+        const invite = await Invite.create({ name, email, status, access, permissions, channels })
         const token = await invite.generateToken()
         const action_url = `http://localhost:5000/register?token=${token}`
 

@@ -17,12 +17,13 @@ router.get("/", auth, admin, getPosts)
 
 router.get("/:channelId/all", auth, getPostsbyChannelId)
 
+// Add auth middleware when needed
 router.get("/:id",getPost)
 
 router.post("/", auth, createPost)
 
-router.patch("/:id",updatePost)
+router.patch("/:id", auth, updatePost)
 
-router.delete("/:id",deletePost)
+router.delete("/:id", auth, deletePost)
 
 module.exports = router

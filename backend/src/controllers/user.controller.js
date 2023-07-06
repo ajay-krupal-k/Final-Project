@@ -49,11 +49,10 @@ const createUser = async (req, res) => {
 
             await Invite.updateOne({email: email},{$set: {userId: user._id}})
 
-            const findUser = await User.findById(user._id)
-            await findUser.populate('usraccess')
-            
-            console.log('access',findUser.usraccess[0].access)
-            console.log('permissions',findUser.usraccess[0].permissions)
+            // const findUser = await User.findById(user._id)
+            // await findUser.populate('usraccess')
+            // console.log('access',findUser.usraccess[0].access)
+            // console.log('permissions',findUser.usraccess[0].permissions)
 
             const token = await user.generateAuthToken()
             res.status(200).json({ user, token })

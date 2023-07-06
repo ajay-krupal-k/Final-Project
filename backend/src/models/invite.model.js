@@ -28,10 +28,11 @@ const inviteSchema = new Schema({
         enum: ['Pending', 'Accepted'],
         default: 'Pending'
     },
-    access: {
-        type: [String],
+    channels: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Channel',
         required: true
-    },
+    }],
     permissions: {
         type: [String],
         enum: ['create', 'edit', 'delete'],

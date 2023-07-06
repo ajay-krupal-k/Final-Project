@@ -15,10 +15,10 @@ const router = express.Router()
 router.get("/", auth, getChannels)
 
 // get a single channel
-router.get("/:id", getChannel)
+router.get("/:id", auth, getChannel)
 
 // Get all the posts of the channel
-router.get("/:channelId/posts",getPosts)
+router.get("/:channelId/posts", auth, getPosts)
 
 // Create a new channel
 router.post("/", auth, admin, createChannel)
