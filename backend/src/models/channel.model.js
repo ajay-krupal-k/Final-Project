@@ -16,5 +16,10 @@ const channelSchema = new Schema({
     }
 }, {timestamps: true})
 
+channelSchema.virtual("posts",{
+    ref: "Post",
+    localField: '_id',
+    foreignField: "channelId"
+})
 
 module.exports = mongoose.model('Channel',channelSchema)

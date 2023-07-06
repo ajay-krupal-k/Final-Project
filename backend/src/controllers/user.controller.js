@@ -38,18 +38,20 @@ const getUser = async (req, res) => {
 
 // POST a new user
 const createUser = async (req, res) => {
-    const { password, cpassword } = req.body
+    const { password, cpassword, role } = req.body
 
     const name = req.name
     const email = req.email
 
     try {
         if (password === cpassword) {
-            const user = await User.create({ name, email, password })
+            const user = await User.create({ name, email, password, role })
 
             await Invite.updateOne({email: email},{$set: {userId: user._id}})
+
             const findUser = await User.findById(user._id)
             await findUser.populate('usraccess')
+            
             console.log('access',findUser.usraccess[0].access)
             console.log('permissions',findUser.usraccess[0].permissions)
 

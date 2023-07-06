@@ -1,11 +1,12 @@
 const Channel = require('../models/channel.model')
 const User = require('../models/user.model')
+const mongoose = require('mongoose')
 
-const getChannels = async (req,res) => {
+const getChannels = async (req, res) => {
 
-    if(req.user.role === "admin"){
+    if (req.user.role === "admin") {
         const channels = await Channel.find({})
-        res.status(200).json({channels})
+        res.status(200).json({ channels })
     }
 
     const findUser = await User.findById(req.user._id)
@@ -15,26 +16,41 @@ const getChannels = async (req,res) => {
 
     console.log(arr)
 
-    const channelName = await Channel.find({name: {$in: arr}})
-    res.status(200).json({channelName})
+    const channelName = await Channel.find({ name: { $in: arr } })
+    res.status(200).json({ channelName })
 }
 
-const createChannel = async (req,res) => {
+const getChannel = async (req,res) => {
+    const { id } = req.params
 
-    const {name, description} = req.body
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Invalid Channel ID' })
+    }
+
+    try {
+        const channel = await Channel.findById(id)
+        res.status(200).json(channel)
+    } catch (error) {
+        res.status(404).json({ error: error.message })
+    }
+}
+
+const createChannel = async (req, res) => {
+
+    const { name, description } = req.body
 
     try {
         const channel = await Channel.create({ name, description })
         await Channel.find().populate('userId').then(p => console.log(p)).catch(error => console.log(error))
         await res.status(200).json(channel)
-    } catch(error) {
-        await res.status(400).json({error: error.message})
+    } catch (error) {
+        await res.status(400).json({ error: error.message })
     }
 
 
 }
 
-const deleteChannel = async (req,res) => {
+const deleteChannel = async (req, res) => {
 
     const id = req.params.id
 
@@ -50,8 +66,26 @@ const deleteChannel = async (req,res) => {
     }
 }
 
+const getPosts = async (req, res) => {
+    const { channelId } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(channelId)) {
+        return res.status(404).json({ error: 'Invalid Channel ID' })
+    }
+
+    try {
+        const channel = await Channel.findById(channelId)
+        await channel.populate('posts')
+        res.status(200).json(channel.posts)
+    } catch(error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 module.exports = {
     getChannels,
+    getChannel,
     createChannel,
-    deleteChannel
+    deleteChannel,
+    getPosts
 }

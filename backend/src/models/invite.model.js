@@ -34,7 +34,7 @@ const inviteSchema = new Schema({
     },
     permissions: {
         type: [String],
-        enum: ['read', 'edit', 'delete'],
+        enum: ['create', 'edit', 'delete'],
         required: true
     },
     token: {

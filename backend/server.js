@@ -42,13 +42,18 @@ mongoose.connect(process.env.MONGO_URI)
         console.log(error.message)
     })
 
-const User = require('./src/models/user.model')
+const Channel = require('./src/models/channel.model')
+const Post = require('./src/models/post.model')
 
 const main = async function () {
-    const user = await User.findById('64a54266189d0f821a6a3c1f')
-    await user.populate('usraccess')
-    console.log(user.usraccess[0].access)
+    // const channel = await Channel.findById('64a556fc066c8dc0c619c832')
+    // await channel.populate('posts').then(p => console.log(p)).catch(err=>console.log(err))
+    // console.log(channel.posts)
 
+    // const posts = await Post.findById('64a657c41e063a8f9d6bd838')
+    // await posts.populate('channelId').then(p => console.log(p)).catch(err=>console.log(err))
+
+    // console.log("Posts Column",posts.channelId)
 }
 
 // main()
