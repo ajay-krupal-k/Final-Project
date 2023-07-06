@@ -3,6 +3,7 @@ const express = require('express')
 const {
     getChannels,
     createChannel,
+    updateChannel,
     deleteChannel,
     getPosts,
     getChannel
@@ -23,6 +24,10 @@ router.get("/:channelId/posts", auth, getPosts)
 // Create a new channel
 router.post("/", auth, admin, createChannel)
 
+// Update a channel
+router.patch("/", auth, admin, updateChannel)
+
+// Delete a channel
 router.delete("/:id", auth, admin, deleteChannel)
 
 module.exports = router

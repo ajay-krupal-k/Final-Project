@@ -61,12 +61,30 @@ const createChannel = async (req, res) => {
 
 }
 
+const updateChannel = async (req, res) => {
+
+    const { id } = req.params
+
+    const updates = req.body
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Invalid Channel ID' })
+    }
+
+    try {
+        const channel = await Channel.updateOne({ _id: new ObjectId(id) },{$set: updates})
+        res.status(200).json(channel)
+    } catch (error) {
+        res.status(404).json({ error: error.message })
+    }
+}
+
 const deleteChannel = async (req, res) => {
 
     const id = req.params.id
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'Invalid User' })
+        return res.status(404).json({ error: 'Invalid Channel ID' })
     }
 
     try {
@@ -97,6 +115,7 @@ module.exports = {
     getChannels,
     getChannel,
     createChannel,
+    updateChannel,
     deleteChannel,
     getPosts
 }
