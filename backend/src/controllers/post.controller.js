@@ -44,7 +44,7 @@ const getPostsbyChannelId = async (req, res) => {
 const createPost = async (req, res) => {
     const invite = await Invite.find({ userId: req.user._id })
 
-    if ((invite[0].permissions).includes("create")) {
+    if ((invite[0].permissions).includes("read") || req.user.role === "admin") {
         const { title, description, channelId } = req.body
 
         try {
@@ -54,40 +54,52 @@ const createPost = async (req, res) => {
             res.status(400).json({ error: error.message })
         }
     } else {
-        res.status(400).json({ "error": "Unauthorized access" })   
+        res.status(400).json({ error: "Unauthorized access" })
     }
 
 }
 
 const updatePost = async (req, res) => {
-    const { id } = req.params
+    const invite = await Invite.find({ userId: req.user._id })
 
-    const updates = req.body
+    if ((invite[0].permissions).includes("edit") || req.user.role === "admin") {
+        const { id } = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        res.status(404).json({ errir: 'Invalid Post ID' })
-    }
+        const updates = req.body
 
-    try {
-        const post = await Post.updateOne({ _id: new ObjectId(id) }, { $set: updates })
-        res.status(200).json(post)
-    } catch (error) {
-        res.status(400).json({ error: error.message })
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            res.status(404).json({ errir: 'Invalid Post ID' })
+        }
+
+        try {
+            const post = await Post.updateOne({ _id: new ObjectId(id) }, { $set: updates })
+            res.status(200).json(post)
+        } catch (error) {
+            res.status(400).json({ error: error.message })
+        }
+    } else {
+        return res.status(400).json({ error: "Unauthorized Access" })
     }
 }
 
 const deletePost = async (req, res) => {
-    const { id } = req.params
+    const invite = await Invite.find({ userId: req.user._id })
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        res.status(404).json({ errir: 'Invalid Post ID' })
-    }
+    if ((invite[0].permissions).includes("edit") || req.user.role === "admin") {
+        const { id } = req.params
 
-    try {
-        const post = await Post.deleteOne({ _id: new ObjectId(id) })
-        res.status(200).json(post)
-    } catch (error) {
-        res.status(400).json({ error: error.message })
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            res.status(404).json({ errir: 'Invalid Post ID' })
+        }
+
+        try {
+            const post = await Post.deleteOne({ _id: new ObjectId(id) })
+            res.status(200).json(post)
+        } catch (error) {
+            res.status(400).json({ error: error.message })
+        }
+    } else {
+        res.status(400).json({error: "Unauthorized Access"})
     }
 }
 
