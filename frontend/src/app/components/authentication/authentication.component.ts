@@ -12,6 +12,7 @@ import jwt_decode from "jwt-decode";
 export class AuthenticationComponent implements OnInit {
 
   token!: string;
+  errorMessage!: string;
 
   constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router) { }
 
@@ -37,15 +38,18 @@ export class AuthenticationComponent implements OnInit {
 
 
   onSubmit(form: NgForm) {
-    console.log('here')
-    const password = 'Welcome@123456';
-    const confirmPassword = 'Welcome@123456';
+    if(!form.valid) {
+      return;
+    }
+
+    const password = form.value.password
+    const confirmPassword = form.value.confpassword
 
     this.authService.signUp(password, confirmPassword, this.token)
       .subscribe(response => {
-        console.log('Sign Up Data', response)
+        this.router.navigate(['/login'])
       }, error => {
-        console.log('Sign Up Error', error)
+        this.errorMessage = 'Your account exists or check your credentials'
       })
 
   }

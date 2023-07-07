@@ -14,11 +14,24 @@ export class AuthService {
 
   signUp(password: string, confirmPassword:string, token: string): Observable<Auth> {
     const signUpURL = `http://localhost:5000/register?token=${token}`
+    
     return this.http.post<Auth>(
       signUpURL,
       {
         password: password,
         cpassword: confirmPassword,
+      }
+    )
+  }
+
+  signIn(email: string, password: string): Observable<Auth> {
+    const signInURL = "http://localhost:5000/login"
+
+    return this.http.post<Auth>(
+      signInURL,
+      {
+        email,
+        password
       }
     )
   }
