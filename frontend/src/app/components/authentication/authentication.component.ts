@@ -47,6 +47,7 @@ export class AuthenticationComponent implements OnInit {
 
     this.authService.signUp(password, confirmPassword, this.token)
       .subscribe(response => {
+        this.errorMessage = ''
         this.router.navigate(['/login'])
       }, error => {
         this.errorMessage = 'Your account exists or check your credentials'
