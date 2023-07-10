@@ -9,6 +9,8 @@ import { AuthenticationComponent } from './components/authentication/authenticat
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { InvitesTableComponent } from './components/invites-table/invites-table.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     AuthenticationComponent,
     NotFoundPageComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    InvitesTableComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

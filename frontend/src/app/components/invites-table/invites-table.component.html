@@ -1,0 +1,49 @@
+<div class="relative overflow-x-auto sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Email
+                </th>
+                <th scope="col" class="px-6 py-3 w-50">
+                    Accesses
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Status
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let invite of invites"
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ invite.name }}
+                </th>
+                <td class="px-6 py-4">
+                    {{ invite.email }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ getformattedChannelName(invite) }}
+                </td>
+                <td class="px-6 py-4 font-semibold"
+                    [ngClass]="invite.status === 'Accepted' ? 'text-green-500' : 'text-red-500' ">
+                    {{ invite.status }}
+                </td>
+                <td class="px-6 py-4 text-right">
+                    <a data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" type="button"
+                        class="block font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <div id="authentication-modal" tabindex="-1" aria-hidden="true"
+                        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                        <app-modal [username]="invite.name"></app-modal>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
