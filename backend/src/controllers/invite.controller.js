@@ -10,7 +10,7 @@ const User = require('../models/user.model')
 const client = new postmark.ServerClient(process.env.API_KEY);
 
 const getInvites = async (req, res) => {
-    const invites = await Invite.find({})
+    const invites = await Invite.find({}).populate('channels')
 
     res.status(200).json(invites)
 }

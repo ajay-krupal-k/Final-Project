@@ -11,6 +11,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { InvitesTableComponent } from './components/invites-table/invites-table.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { EditInviteComponent } from './components/edit-invite/edit-invite.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ModalComponent } from './components/modal/modal.component';
     LoginComponent,
     DashboardComponent,
     InvitesTableComponent,
-    ModalComponent
+    ModalComponent,
+    EditInviteComponent
   ],
   imports: [
     BrowserModule,

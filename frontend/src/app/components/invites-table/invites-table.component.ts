@@ -17,7 +17,6 @@ export class InvitesTableComponent implements OnInit {
       .subscribe(response => {
         console.log(response)
         this.invites = response
-        console.log(this.invites)
       },error => {
         console.log(error)
       }) 

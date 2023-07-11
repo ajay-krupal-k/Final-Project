@@ -1,5 +1,4 @@
 const Channel = require('../models/channel.model')
-const User = require('../models/user.model')
 const Invite = require('../models/invite.model')
 const mongoose = require('mongoose')
 
@@ -7,13 +6,13 @@ const getChannels = async (req, res) => {
 
     if (req.user.role === "admin") {
         const channels = await Channel.find({})
-        res.status(200).json({ channels })
+        return res.status(200).json(channels);
     }
 
     const userAccess = await Invite.findOne({ userId: req.user._id })
 
     const channelName = await Channel.find({ _id: { $in: userAccess.channels } })
-    res.status(200).json({ channelName })
+    return res.status(200).json({ channelName })
 }
 
 const getChannel = async (req, res) => {

@@ -44,8 +44,13 @@ mongoose.connect(process.env.MONGO_URI)
 
 const Channel = require('./src/models/channel.model')
 const Post = require('./src/models/post.model')
+const Invite = require('./src/models/invite.model')
 
 const main = async function () {
+
+    // const invites = await Invite.find({}).populate('channels')
+    // console.log(invites[2].channels)
+    // await invites.populate('channels').then(p => console.log(p))
     // const channel = await Channel.findById('64a556fc066c8dc0c619c832')
     // await channel.populate('posts').then(p => console.log(p)).catch(err=>console.log(err))
     // console.log(channel.posts)
