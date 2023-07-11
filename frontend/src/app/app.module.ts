@@ -12,6 +12,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { InvitesTableComponent } from './components/invites-table/invites-table.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { EditInviteComponent } from './components/edit-invite/edit-invite.component';
+import { ChannelsTableComponent } from './components/channels-table/channels-table.component';
+import { CreateChannelComponent } from './components/create-channel/create-channel.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { EditInviteComponent } from './components/edit-invite/edit-invite.compon
     DashboardComponent,
     InvitesTableComponent,
     ModalComponent,
-    EditInviteComponent
+    EditInviteComponent,
+    ChannelsTableComponent,
+    CreateChannelComponent
   ],
   imports: [
     BrowserModule,

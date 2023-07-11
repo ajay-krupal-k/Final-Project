@@ -1,5 +1,9 @@
 export interface Channels {
-    _id: string;
+    _id?: string;
     name: string;
     description: string;
+    createdBy?: {
+        email: string;
+    };
+    createdAt?: Date;
 }

@@ -33,19 +33,14 @@
                 </li>
             </ul>
         </div>
-        <div id="tabContent">
+        <div id="tabContent" class="w-[50em]">
             <div class="hidden p-2 rounded-lg" id="invites" role="tabpanel"
                 aria-labelledby="invites-tab">
                 <app-invites-table></app-invites-table>
             </div>
-            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="channels" role="tabpanel"
+            <div class="hidden p-4 rounded-lg" id="channels" role="tabpanel"
                 aria-labelledby="channels-tab">
-                <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong
-                        class="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>.
-                    Clicking
-                    another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
-                    control
-                    the content visibility and styling.</p>
+                <app-channels-table></app-channels-table>
             </div>
         </div>
     </div>

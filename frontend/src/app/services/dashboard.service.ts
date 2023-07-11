@@ -27,4 +27,13 @@ export class DashboardService {
       getChannelsURL
     )
   }
+
+  createChannel(channel: Channels): Observable<Channels>{
+    const createChannelURL = `${environment.apiURL}/channels/`
+
+    return this.http.post<Channels>(
+      createChannelURL,
+      channel
+    )
+  }
 }

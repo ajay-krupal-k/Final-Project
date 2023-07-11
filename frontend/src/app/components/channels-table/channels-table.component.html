@@ -1,5 +1,5 @@
 <div class="mb-3 flex justify-end w-full">
-    <a type="button" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
+    <a type="button" data-modal-target="createChannel" data-modal-toggle="createChannel"
         class="cursor-pointer block font-medium text-blue-600 hover:text-blue-500" type="button">
         <span class="inline-block">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -8,10 +8,12 @@
                     d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
             </svg>
         </span>
-        Invite User
+        Create Channel
     </a>
-    <app-modal id="authentication-modal" tabindex="-1" aria-hidden="true"
-        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"></app-modal>
+    <app-create-channel id="createChannel" tabindex="-1" aria-hidden="true"
+        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+        (onCreateChannel)="createChannel($event)"
+    ></app-create-channel>
 </div>
 
 <div class="relative overflow-x-auto sm:rounded-lg">
@@ -19,16 +21,13 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    Name
+                    Channel Name
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Email
+                    Created By
                 </th>
                 <th scope="col" class="px-6 py-3 w-50">
-                    Accesses
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Status
+                    Created On
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Action
@@ -36,28 +35,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let invite of invites"
+            <tr *ngFor="let channel of channels"
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ invite.name }}
+                    {{channel.name}}
                 </th>
                 <td class="px-6 py-4">
-                    {{ invite.email }}
+                    {{channel.createdBy?.email}}
                 </td>
                 <td class="px-6 py-4">
-                    {{ getformattedChannelName(invite) }}
+                    {{channel.createdAt | date}}
                 </td>
-                <td class="px-6 py-4 font-semibold"
-                    [ngClass]="invite.status === 'Accepted' ? 'text-green-500' : 'text-red-500' ">
-                    {{ invite.status }}
-                </td>
-                <td class="z-50 px-6 py-4">
-                    <button [attr.data-modal-target]="invite._id" [attr.data-modal-toggle]="invite._id" type="button"
-                        class="z-50 block font-medium text-blue-600 cursor-pointer hover:text-blue-500" type="button">
-                        Edit
+                <td class="px-6 py-4">
+                    <button type="button" class="block font-medium text-blue-600 cursor-pointer hover:text-blue-500"
+                        type="button">
+                        Delete
                     </button>
-                    <app-modal [id]="invite._id" tabindex="-1" aria-hidden="true" [username]="invite.name"
-                        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"></app-modal>
                 </td>
             </tr>
         </tbody>
