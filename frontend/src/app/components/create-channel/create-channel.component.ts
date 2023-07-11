@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Channels } from 'src/app/channels';
 
@@ -11,6 +11,9 @@ export class CreateChannelComponent {
   @Output() onCreateChannel: EventEmitter<Channels> = new EventEmitter();
   channelName!: string;
   channelDesc!: string;
+  @Input() successMsg!: string;
+  @Input() errorMsg!: string;
+
 
   onSubmit(form: NgForm){
     if(!form.valid){

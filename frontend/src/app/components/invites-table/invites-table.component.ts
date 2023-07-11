@@ -26,4 +26,13 @@ export class InvitesTableComponent implements OnInit {
     return invite.channels.map(channel => channel.name).join(', ')
   }
 
+  createInvite(invite: Invite){
+    this.dashboardService.createInvites(invite).subscribe(response => {
+      this.invites.push(response)
+      console.log(response)
+    },error => {
+      console.log(error)
+    })
+  }
+
 }

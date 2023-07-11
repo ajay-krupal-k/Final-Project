@@ -38,6 +38,7 @@ const createInvite = async (req, res) => {
     try {
         const invite = await Invite.create({ name, email, status, access, permissions, channels })
         const token = await invite.generateToken()
+        const createdInvite = await invite.populate('channels')
         const action_url = `http://localhost:5000/register?token=${token}`
 
         client.sendEmailWithTemplate({
@@ -54,7 +55,7 @@ const createInvite = async (req, res) => {
             }
         });
 
-        res.status(200).json({ invite, token })
+        res.status(200).json(createdInvite)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

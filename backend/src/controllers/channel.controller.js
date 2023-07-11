@@ -5,14 +5,14 @@ const mongoose = require('mongoose')
 const getChannels = async (req, res) => {
 
     if (req.user.role === "admin") {
-        const channels = await Channel.find({})
+        const channels = await Channel.find({}).populate('createdBy')
         return res.status(200).json(channels);
     }
 
     const userAccess = await Invite.findOne({ userId: req.user._id })
 
     const channelName = await Channel.find({ _id: { $in: userAccess.channels } })
-    return res.status(200).json({ channelName })
+    return res.status(200).json(channelName)
 }
 
 const getChannel = async (req, res) => {
@@ -50,11 +50,12 @@ const createChannel = async (req, res) => {
     const { name, description } = req.body
 
     try {
-        const channel = await Channel.create({ name, description })
+        const channel = await Channel.create({ name, description, createdBy: req.user._id })
+        const createdChannel = await Channel.findById(channel._id).populate('createdBy')
         await Channel.find().populate('userId').then(p => console.log(p)).catch(error => console.log(error))
-        await res.status(200).json(channel)
+        res.status(200).json(createdChannel)
     } catch (error) {
-        await res.status(400).json({ error: error.message })
+        res.status(400).json({ error: error.message })
     }
 
 

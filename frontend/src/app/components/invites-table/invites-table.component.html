@@ -10,7 +10,7 @@
         </span>
         Invite User
     </a>
-    <app-modal id="authentication-modal" tabindex="-1" aria-hidden="true"
+    <app-modal id="authentication-modal" tabindex="-1" aria-hidden="true" inviteId="authentication-modal" (onCreateInvite)="createInvite($event)"
         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"></app-modal>
 </div>
 
@@ -36,7 +36,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let invite of invites"
+            <tr *ngFor="let invite of invites; let ind = index"
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ invite.name }}
@@ -51,12 +51,12 @@
                     [ngClass]="invite.status === 'Accepted' ? 'text-green-500' : 'text-red-500' ">
                     {{ invite.status }}
                 </td>
-                <td class="z-50 px-6 py-4">
-                    <button [attr.data-modal-target]="invite._id" [attr.data-modal-toggle]="invite._id" type="button"
+                <td class="z-0 px-6 py-4">
+                    <button [attr.data-modal-target]="'invite'+ind" [attr.data-modal-toggle]="'invite'+ind" type="button"
                         class="z-50 block font-medium text-blue-600 cursor-pointer hover:text-blue-500" type="button">
                         Edit
                     </button>
-                    <app-modal [id]="invite._id" tabindex="-1" aria-hidden="true" [username]="invite.name"
+                    <app-modal [id]="'invite'+ind" tabindex="-1" [inviteId]="'invite'+ind" [inviteDetails]="invite"
                         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"></app-modal>
                 </td>
             </tr>

@@ -20,6 +20,15 @@ export class DashboardService {
     )
   }
 
+  createInvites(invite: Invite): Observable<Invite>{
+    const createInvitesURL = `${environment.apiURL}/invites/`
+
+    return this.http.post<Invite>(
+      createInvitesURL,
+      invite
+    )
+  }
+
   getChannels(): Observable<Channels[]>{
     const getChannelsURL = `${environment.apiURL}/channels/`
 

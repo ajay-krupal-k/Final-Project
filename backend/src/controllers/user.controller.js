@@ -107,7 +107,7 @@ const loginUser = async (req, res) => {
         const token = await user.generateAuthToken()
         req.header.authorization = token
 
-        res.status(200).json({ user, token })
+        res.status(200).json(user)
     } catch (error) {
         res.status(404).json({ error: error.message })
     }

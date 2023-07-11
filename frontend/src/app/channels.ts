@@ -5,5 +5,5 @@ export interface Channels {
     createdBy?: {
         email: string;
     };
-    createdAt?: Date;
+    createdAt?: string;
 }

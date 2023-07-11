@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { EditInviteComponent } from './components/edit-invite/edit-invite.component';
 import { ChannelsTableComponent } from './components/channels-table/channels-table.component';
 import { CreateChannelComponent } from './components/create-channel/create-channel.component';
+import { DeleteWarningComponent } from './components/delete-warning/delete-warning.component';
 
 @NgModule({
   declarations: [
@@ -26,12 +27,14 @@ import { CreateChannelComponent } from './components/create-channel/create-chann
     ModalComponent,
     EditInviteComponent,
     ChannelsTableComponent,
-    CreateChannelComponent
+    CreateChannelComponent,
+    DeleteWarningComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     FormsModule
   ],
   providers: [],

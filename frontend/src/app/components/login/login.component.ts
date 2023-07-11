@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent {
   errorMessage!: string;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(form: NgForm) {
     if(!form.valid) {
@@ -23,6 +24,13 @@ export class LoginComponent {
     this.authService.signIn(email, password)
       .subscribe(response => {
         this.errorMessage = ''
+        console.log(response.role)
+        if(response.role === 'admin'){
+          this.router.navigate(['/dashboard'])
+        }
+        else {
+          this.router.navigate(['/register'])
+        }
         console.log('Logged In', response)
       }, error => {
         this.errorMessage = 'Check your Email ID and Password'
