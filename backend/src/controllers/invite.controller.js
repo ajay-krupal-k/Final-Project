@@ -72,7 +72,8 @@ const updateInvite = async (req, res) => {
 
     try {
         const invite = await Invite.updateOne({ _id: new ObjectId(req.params.id)},{$set: updates})
-        res.status(200).json(invite)
+        const updatedInvite = await Invite.findById(id).populate('channels')
+        res.status(200).json(updatedInvite)
     } catch (error) {
         res.status(404).json({ error: error.message })
     }

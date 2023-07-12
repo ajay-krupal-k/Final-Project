@@ -3,10 +3,10 @@ export interface Invite {
     name: string;
     email: string;
     status?: string;
-    channels: [{
+    channels: {
         _id?: string;
         name: string;
         description: string;
-    }];
+    }[];
     permissions: string[];
 }

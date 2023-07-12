@@ -56,7 +56,7 @@
                         class="z-50 block font-medium text-blue-600 cursor-pointer hover:text-blue-500" type="button">
                         Edit
                     </button>
-                    <app-modal [id]="'invite'+ind" tabindex="-1" [inviteId]="'invite'+ind" [inviteDetails]="invite"
+                    <app-modal [id]="'invite'+ind" tabindex="-1" [inviteId]="'invite'+ind" [inviteDetails]="invite" (onUpdateInvite)="updateInvite($event)"
                         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"></app-modal>
                 </td>
             </tr>

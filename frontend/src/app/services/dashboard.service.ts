@@ -29,6 +29,22 @@ export class DashboardService {
     )
   }
 
+  updateInvites(invite: Record<string, any>): Observable<Invite>{
+    const updateInviteURL = `${environment.apiURL}/invites/${invite['_id']}`
+
+    console.log('Within Service',invite['fullName'])
+
+    return this.http.patch<Invite>(
+      updateInviteURL,
+      {
+        name: invite['fullName'],
+        email: invite['userEmail'],
+        channels: invite['channelsArray'],
+        permissions: invite['checkArray']
+      }
+    )
+  }
+
   getChannels(): Observable<Channels[]>{
     const getChannelsURL = `${environment.apiURL}/channels/`
 

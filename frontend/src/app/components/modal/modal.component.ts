@@ -12,6 +12,7 @@ import { DashboardService } from 'src/app/services/dashboard.service';
 
 export class ModalComponent implements OnInit {
   @Output() onCreateInvite: EventEmitter<Invite> = new EventEmitter();
+  @Output() onUpdateInvite: EventEmitter<Invite> = new EventEmitter();
   @Input() inviteId!: string;
   @Input() inviteDetails!: Invite;
   channels: Channels[] = [];
@@ -24,6 +25,7 @@ export class ModalComponent implements OnInit {
   form!: FormGroup;
   permissionsValues: Array<any> = [];
   channelValues: Array<any> = [];
+  isUpdateForm: Boolean = false;
 
   constructor(private dashboardService: DashboardService, private fb: FormBuilder) {
 
@@ -50,9 +52,11 @@ export class ModalComponent implements OnInit {
     if (Object.keys(this.inviteDetails).length !== 0) {
       const { name, email, channels, permissions } = this.inviteDetails
 
-      // console.log('Channels IDs', this.inviteDetails.channels)
+      console.log('Channels IDs', this.inviteDetails._id)
+      this.isUpdateForm = true;
 
       this.form = this.fb.group({
+        _id: this.inviteDetails._id,
         fullName: this.fb.control(name, [Validators.required]),
         userEmail: this.fb.control(email, [Validators.required]),
         channelsArray: this.fb.array(channels.map(val => val._id), [Validators.required]),
@@ -108,13 +112,16 @@ export class ModalComponent implements OnInit {
           i++;
         });
       }
-
-      console.log('Perissions Checked', checkArray)
     }
   }
 
   submitForm() {
     // console.log(this.form.value);
+
+    if(this.isUpdateForm) {
+      this.onUpdateInvite.emit(this.form.value)
+      return;
+    }
 
     const invite = {
       name: this.form.value.fullName,
