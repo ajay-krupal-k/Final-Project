@@ -11,10 +11,14 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { InvitesTableComponent } from './components/invites-table/invites-table.component';
 import { ModalComponent } from './components/modal/modal.component';
-import { EditInviteComponent } from './components/edit-invite/edit-invite.component';
 import { ChannelsTableComponent } from './components/channels-table/channels-table.component';
 import { CreateChannelComponent } from './components/create-channel/create-channel.component';
 import { DeleteWarningComponent } from './components/delete-warning/delete-warning.component';
+import { CardsComponent } from './components/cards/cards.component';
+import { ChannelsDashComponent } from './components/channels-dash/channels-dash.component';
+import { UsersDashComponent } from './components/users-dash/users-dash.component';
+import { PostsComponent } from './components/posts/posts.component';
+import { PostComponent } from './components/post/post.component';
 
 @NgModule({
   declarations: [
@@ -25,10 +29,14 @@ import { DeleteWarningComponent } from './components/delete-warning/delete-warni
     DashboardComponent,
     InvitesTableComponent,
     ModalComponent,
-    EditInviteComponent,
     ChannelsTableComponent,
     CreateChannelComponent,
-    DeleteWarningComponent
+    DeleteWarningComponent,
+    CardsComponent,
+    ChannelsDashComponent,
+    UsersDashComponent,
+    PostsComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,

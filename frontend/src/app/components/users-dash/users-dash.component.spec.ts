@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditInviteComponent } from './edit-invite.component';
+import { UsersDashComponent } from './users-dash.component';
 
-describe('EditInviteComponent', () => {
-  let component: EditInviteComponent;
-  let fixture: ComponentFixture<EditInviteComponent>;
+describe('UsersDashComponent', () => {
+  let component: UsersDashComponent;
+  let fixture: ComponentFixture<UsersDashComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditInviteComponent ]
+      declarations: [ UsersDashComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EditInviteComponent);
+    fixture = TestBed.createComponent(UsersDashComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

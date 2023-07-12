@@ -3,8 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { LoginComponent } from './components/login/login.component';
-import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component'
-import { DashboardComponent } from './components/dashboard/dashboard.component'
+import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { UsersDashComponent } from './components/users-dash/users-dash.component';
+import { PostsComponent } from './components/posts/posts.component';
 
 const routes: Routes = [
   {
@@ -22,6 +24,13 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent
+  },
+  {
+    path: 'channels',
+    children: [
+      { path: '', component: UsersDashComponent},
+      { path: ':channelId/posts', component: PostsComponent}
+    ]
   },
   {
     path: '404',

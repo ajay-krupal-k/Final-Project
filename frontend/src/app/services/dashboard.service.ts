@@ -4,6 +4,7 @@ import { Invite } from '../invites';
 import { Channels } from '../channels';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Post } from '../post';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,14 @@ export class DashboardService {
     return this.http.post<Channels>(
       createChannelURL,
       channel
+    )
+  }
+
+  getPosts(channelId: string): Observable<Post[]>{
+    const getPostsURL = `${environment.apiURL}/posts/${channelId}/all`
+
+    return this.http.get<Post[]>(
+      getPostsURL
     )
   }
 }
