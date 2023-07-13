@@ -1,7 +1,8 @@
 <div class="w-full h-full p-10">
     <div class="flex justify-between">
         <h1 class="text-2xl font-medium mb-3 text-gray-500">{{ channelName }}</h1>
-        <a href="" class="items-end text-md block font-medium text-blue-600 cursor-pointer hover:text-blue-400">
+        <a *ngIf="permissions.includes('create')" [attr.data-modal-target]="channelId" [attr.data-modal-toggle]="channelId" type="button"
+            class="items-end text-md block font-medium text-blue-600 cursor-pointer hover:text-blue-400">
             <span class="inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4">
@@ -11,6 +12,10 @@
             </span>
             Create
         </a>
+        <app-createposts *ngIf="permissions.includes('create')" [id]="channelId" tabindex="-1" aria-hidden="true" [modalId]="channelId"
+            (onCreatePosts)="createPosts($event)"
+            class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"></app-createposts>
     </div>
-    <app-post *ngFor="let post of posts" [postTitle]="post.title" [postDescription]="post.description"></app-post>
+    <app-post type="button" *ngFor="let post of posts" [postTitle]="post.title" [postDescription]="post.description" [postCreatedOn]="post?.createdAt ?? '' " [permissions]="permissions"
+        (postDelete)="onDelete($event)" (postUpdates)="onUpdate($event)" [postId]="post?._id ?? ''"></app-post>
 </div>

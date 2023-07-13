@@ -2,6 +2,6 @@ export interface Post {
     _id?: string;
     title: string;
     description: string;
-    channelId?: string;
-    createdAt?: string;
+    channelId?:string;
+    createdAt?:string;
 }

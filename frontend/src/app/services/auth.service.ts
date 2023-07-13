@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Auth } from "../auth"
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -33,6 +34,15 @@ export class AuthService {
         email,
         password
       }
+    )
+  }
+
+  logout(){
+    const logoutURL = `${environment.apiURL}/logout`
+
+    return this.http.post(
+      logoutURL,
+      ''
     )
   }
 }

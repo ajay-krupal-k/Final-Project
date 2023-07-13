@@ -10,7 +10,9 @@ import { initFlowbite } from 'flowbite';
 export class AppComponent implements OnInit{
   title = 'frontend';
 
+
   ngOnInit(): void {
     initFlowbite();
   }
+
 }

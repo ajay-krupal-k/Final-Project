@@ -29,7 +29,7 @@ export class LoginComponent {
           this.router.navigate(['/dashboard'])
         }
         else {
-          this.router.navigate(['/register'])
+          this.router.navigate(['/channels'])
         }
         console.log('Logged In', response)
       }, error => {

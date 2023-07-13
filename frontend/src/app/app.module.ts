@@ -19,6 +19,8 @@ import { ChannelsDashComponent } from './components/channels-dash/channels-dash.
 import { UsersDashComponent } from './components/users-dash/users-dash.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { PostComponent } from './components/post/post.component';
+import { CreatepostsComponent } from './components/createposts/createposts.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { PostComponent } from './components/post/post.component';
     ChannelsDashComponent,
     UsersDashComponent,
     PostsComponent,
-    PostComponent
+    PostComponent,
+    CreatepostsComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

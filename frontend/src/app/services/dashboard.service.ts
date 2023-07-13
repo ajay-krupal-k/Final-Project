@@ -70,4 +70,38 @@ export class DashboardService {
       getPostsURL
     )
   }
+
+  createPosts(post: Post): Observable<Post>{
+    const createPostsURL = `${environment.apiURL}/posts/`
+
+    return this.http.post<Post>(
+      createPostsURL,
+      post
+    )
+  }
+
+  updatePosts(post: Post): Observable<Post>{
+    const updatePostsURL = `${environment.apiURL}/posts/${post._id}`
+
+    return this.http.patch<Post>(
+      updatePostsURL,
+      post
+    )
+  }
+
+  deletePosts(channelId: string): Observable<Post>{
+    const deletePostsURL = `${environment.apiURL}/posts/${channelId}`
+
+    return this.http.delete<Post>(
+      deletePostsURL
+    )
+  }
+
+  getPermissions(): Observable<Array<any>>{
+    const getPermissionsURL = `${environment.apiURL}/invites/permissions`
+
+    return this.http.get<Array<any>>(
+      getPermissionsURL
+    )
+  }
 }
