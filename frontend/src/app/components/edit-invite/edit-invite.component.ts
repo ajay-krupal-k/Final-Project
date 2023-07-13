@@ -1,18 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 import { Channels } from 'src/app/channels';
 import { Invite } from 'src/app/invites';
 import { DashboardService } from 'src/app/services/dashboard.service';
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css']
+  selector: 'app-edit-invite',
+  templateUrl: './edit-invite.component.html',
+  styleUrls: ['./edit-invite.component.css']
 })
 
-export class ModalComponent implements OnInit {
-  @Output() onCreateInvite: EventEmitter<Invite> = new EventEmitter();
-  @Output() onUpdateInvite: EventEmitter<Invite> = new EventEmitter();
+export class EditInviteComponent implements OnInit {
+  @Output() onCreateInvite: EventEmitter<Invite> = new EventEmitter<Invite>();
+  @Output() onUpdateInvite: EventEmitter<Invite> = new EventEmitter<Invite>();
   @Input() inviteId!: string;
   @Input() inviteDetails!: Invite;
   channels: Channels[] = [];
@@ -27,8 +29,7 @@ export class ModalComponent implements OnInit {
   channelValues: Array<any> = [];
   isUpdateForm: Boolean = false;
 
-  constructor(private dashboardService: DashboardService, private fb: FormBuilder) {
-
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Invite, private dashboardService: DashboardService, private fb: FormBuilder) {
     this.form = this.fb.group({
       fullName: this.fb.control('', [Validators.required]),
       userEmail: this.fb.control('', [Validators.required]),
@@ -39,8 +40,6 @@ export class ModalComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log('Inside Edit')
-
     this.dashboardService.getChannels()
       .subscribe(response => {
         this.channels = response
@@ -48,15 +47,13 @@ export class ModalComponent implements OnInit {
         console.log(error)
       })
 
-    console.log('Invite Details', typeof this.inviteDetails)
-    if (Object.keys(this.inviteDetails).length !== 0) {
-      const { name, email, channels, permissions } = this.inviteDetails
+    if (Object.keys(this.data).length !== 0) {
+      const { name, email, channels, permissions } = this.data
 
-      console.log('Channels IDs', this.inviteDetails._id)
       this.isUpdateForm = true;
 
       this.form = this.fb.group({
-        _id: this.inviteDetails._id,
+        _id: this.data._id,
         fullName: this.fb.control(name, [Validators.required]),
         userEmail: this.fb.control(email, [Validators.required]),
         channelsArray: this.fb.array(channels.map(val => val._id), [Validators.required]),
@@ -66,6 +63,25 @@ export class ModalComponent implements OnInit {
       this.channelValues = this.form.value.channelsArray
       this.permissionsValues = this.form.value.checkArray
     }
+
+    // console.log('Invite Details', typeof this.inviteDetails)
+    // if (Object.keys(this.inviteDetails).length !== 0) {
+    //   const { name, email, channels, permissions } = this.inviteDetails
+
+    //   console.log('Channels IDs', this.inviteDetails._id)
+    //   this.isUpdateForm = true;
+
+    //   this.form = this.fb.group({
+    //     _id: this.inviteDetails._id,
+    //     fullName: this.fb.control(name, [Validators.required]),
+    //     userEmail: this.fb.control(email, [Validators.required]),
+    //     channelsArray: this.fb.array(channels.map(val => val._id), [Validators.required]),
+    //     checkArray: this.fb.array(permissions, [Validators.required])
+    //   })
+
+    //   this.channelValues = this.form.value.channelsArray
+    //   this.permissionsValues = this.form.value.checkArray
+    // }
   }
 
   onCheckboxChange(e: any, formName: string) {
@@ -85,7 +101,7 @@ export class ModalComponent implements OnInit {
       }
     } else {
       const checkArray: FormArray = this.form.get('checkArray') as FormArray;
-      if(this.permissionsValues.length !== 0) {
+      if (this.permissionsValues.length !== 0) {
         checkArray.push(new FormControl(this.permissionsValues))
       }
       if (e.target.checked) {
@@ -106,7 +122,7 @@ export class ModalComponent implements OnInit {
   submitForm() {
     // console.log(this.form.value);
 
-    if(this.isUpdateForm) {
+    if (this.isUpdateForm) {
       this.onUpdateInvite.emit(this.form.value)
       return;
     }
@@ -122,4 +138,27 @@ export class ModalComponent implements OnInit {
 
     this.form.reset()
   }
+
+  // submitForm(): Invite {
+  //   // console.log(this.form.value);
+
+  //   if (this.isUpdateForm) {
+  //     // this.onUpdateInvite.emit(this.form.value)
+  //     return this.form.value;
+  //   }
+
+  //   const invite = {
+  //     name: this.form.value.fullName,
+  //     email: this.form.value.userEmail,
+  //     channels: this.form.value.channelsArray,
+  //     permissions: this.form.value.checkArray
+  //   }
+
+  //   return invite
+
+  //   // this.onCreateInvite.emit(invite)
+
+  //   this.form.reset()
+  // }
+
 }

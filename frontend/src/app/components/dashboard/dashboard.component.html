@@ -1,11 +1,12 @@
-<div class="flex mt-40 justify-center w-full">
+<!-- <div class="flex mt-40 justify-center w-full">
     <div>
         <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#tabContent"
                 role="tablist">
                 <li class="mr-2" role="presentation">
-                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="invites-tab" data-tabs-target="#invites"
-                        type="button" role="tab" aria-controls="invites"  aria-selected="true">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="invites-tab"
+                        data-tabs-target="#invites" type="button" role="tab" aria-controls="invites"
+                        aria-selected="true">
                         <span class="inline-block mr-1">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-4 h-4">
@@ -34,14 +35,29 @@
             </ul>
         </div>
         <div id="tabContent" class="w-[50em]">
-            <div class="hidden p-2 rounded-lg" id="invites" role="tabpanel"
-                aria-labelledby="invites-tab">
+            <div class="hidden rounded-lg" id="invites" role="tabpanel" aria-labelledby="invites-tab">
                 <app-invites-table></app-invites-table>
             </div>
-            <div class="hidden p-4 rounded-lg" id="channels" role="tabpanel"
-                aria-labelledby="channels-tab">
+            <div class="hidden p-4 rounded-lg" id="channels" role="tabpanel" aria-labelledby="channels-tab">
                 <app-channels-table></app-channels-table>
             </div>
         </div>
+    </div>
+</div> -->
+
+<div class="mt-20 flex justify-center">
+    <div>
+        <mat-tab-group>
+            <mat-tab label="Invite Users">
+                <ng-template matTabContent>
+                    <app-invites-table></app-invites-table>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Create Channels">
+                <ng-template matTabContent>
+                    Content 2
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
     </div>
 </div>

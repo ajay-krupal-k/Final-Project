@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   signUp(password: string, confirmPassword:string, token: string): Observable<Auth> {
-    const signUpURL = `http://localhost:5000/register?token=${token}`
+    const signUpURL = `${environment.apiURL}/register?token=${token}`
     
     return this.http.post<Auth>(
       signUpURL,
@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   signIn(email: string, password: string): Observable<Auth> {
-    const signInURL = "http://localhost:5000/login"
+    const signInURL = `${environment.apiURL}/login`
 
     return this.http.post<Auth>(
       signInURL,
@@ -43,6 +43,14 @@ export class AuthService {
     return this.http.post(
       logoutURL,
       ''
+    )
+  }
+
+  currentUser():Observable<Auth>{
+    const currentUserURL = `${environment.apiURL}/currentuser`
+
+    return this.http.get<Auth>(
+      currentUserURL
     )
   }
 }

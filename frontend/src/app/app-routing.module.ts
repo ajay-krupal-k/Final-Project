@@ -7,6 +7,7 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UsersDashComponent } from './components/users-dash/users-dash.component';
 import { PostsComponent } from './components/posts/posts.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -25,6 +26,11 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent
   },
+  // {
+  //   path: 'dashboard',
+  //   component: DashboardComponent,
+  //   canActivate: [AuthGuard]
+  // },
   {
     path: 'channels',
     children: [

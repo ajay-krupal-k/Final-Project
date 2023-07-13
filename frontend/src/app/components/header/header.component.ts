@@ -13,7 +13,7 @@ export class HeaderComponent{
   constructor(private router: Router, private authService: AuthService) {}
 
   hasRoute() {
-    const routes = ["/","/login","/register"]
+    const routes = ["/","/login","/register","/404"]
     return !routes.includes(this.router.url);
   }
 
