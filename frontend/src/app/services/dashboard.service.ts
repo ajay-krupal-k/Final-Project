@@ -63,6 +63,14 @@ export class DashboardService {
     )
   }
 
+  deleteChannel(channelId: string){
+    const deleteChannelURL = `${environment.apiURL}/channels/${channelId}`
+
+    return this.http.delete(
+      deleteChannelURL
+    )
+  }
+
   getPosts(channelId: string): Observable<Post[]>{
     const getPostsURL = `${environment.apiURL}/posts/${channelId}/all`
 

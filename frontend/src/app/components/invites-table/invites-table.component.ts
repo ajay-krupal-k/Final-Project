@@ -3,7 +3,6 @@ import { DashboardService } from 'src/app/services/dashboard.service';
 import { Invite } from 'src/app/invites';
 import { MatDialog } from '@angular/material/dialog';
 import { EditInviteComponent } from '../edit-invite/edit-invite.component';
-import { DialogRef } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-invites-table',

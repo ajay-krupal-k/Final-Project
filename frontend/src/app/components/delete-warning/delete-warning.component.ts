@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Post } from 'src/app/post';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Channels } from 'src/app/channels';
 
 @Component({
   selector: 'app-delete-warning',
@@ -11,12 +12,13 @@ export class DeleteWarningComponent implements OnInit {
   @Input() channelId!: string;
   @Output() onDeletePost: EventEmitter<string> = new EventEmitter<string>();
 
+  constructor(@Inject(MAT_DIALOG_DATA) public channel: Channels) {}
+
   ngOnInit(): void {
-    console.log('Inside Delete')
+    
   }
 
-  onSubmit(channelId: string){
-    const cId = channelId.slice(1)
-    this.onDeletePost.emit(cId)
+  onConfirm(channelId: string){
+    this.onDeletePost.emit(channelId)
   }
 }
