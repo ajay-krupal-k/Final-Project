@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Post } from 'src/app/post';
 import { DashboardService } from 'src/app/services/dashboard.service';
+import { CreatepostsComponent } from '../createposts/createposts.component';
 
 @Component({
   selector: 'app-posts',
@@ -14,7 +16,7 @@ export class PostsComponent implements OnInit {
   posts: Post[] = [];
   permissions: Array<any> = []
 
-  constructor(private route: ActivatedRoute, private dashboardService: DashboardService) { }
+  constructor(private route: ActivatedRoute, private dashboardService: DashboardService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -38,6 +40,14 @@ export class PostsComponent implements OnInit {
 
   }
 
+  openDialog() {
+    const dialogRef = this.dialog.open(CreatepostsComponent)
+
+    dialogRef.componentInstance.onCreatePosts.subscribe(response => {
+      this.createPosts(response)
+    })
+  }
+
   createPosts(post: Post) {
     console.log('Posts Component', post)
 
@@ -48,17 +58,18 @@ export class PostsComponent implements OnInit {
 
     this.dashboardService.createPosts(formValue).subscribe(response => {
       this.posts.push(response)
+      this.posts = this.posts.slice()
     }, error => {
       console.log(error)
     })
   }
 
-  onUpdate(post: Post){
+  onUpdate(post: Post) {
     this.dashboardService.updatePosts(post).subscribe(response => {
       console.log('Updated Post', response)
       const updatedIndex = this.posts.findIndex(post => post._id === response._id)
 
-      if(updatedIndex !== -1){
+      if (updatedIndex !== -1) {
         this.posts[updatedIndex].title = response.title
         this.posts[updatedIndex].description = response.description
       }
@@ -67,10 +78,10 @@ export class PostsComponent implements OnInit {
     })
   }
 
-  onDelete(channelId: string){
-    this.dashboardService.deletePosts(channelId).subscribe(response => {
+  onDelete(postId: string) {
+    this.dashboardService.deletePosts(postId).subscribe(response => {
       console.log(response)
-      this.posts = this.posts.filter(post => post._id !== channelId)
+      this.posts = this.posts.filter(post => post._id !== postId)
     }, error => {
       console.log(error)
     })

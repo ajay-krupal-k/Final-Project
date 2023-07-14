@@ -123,6 +123,7 @@ export class EditInviteComponent implements OnInit {
     // console.log(this.form.value);
 
     if (this.isUpdateForm) {
+      this.isUpdateForm = false
       this.onUpdateInvite.emit(this.form.value)
       return;
     }

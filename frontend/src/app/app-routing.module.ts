@@ -8,6 +8,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UsersDashComponent } from './components/users-dash/users-dash.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { AuthGuard } from './auth.guard';
+import { LoginGuard } from './login.guard';
 
 const routes: Routes = [
   {
@@ -24,19 +25,16 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [LoginGuard,AuthGuard]
   },
-  // {
-  //   path: 'dashboard',
-  //   component: DashboardComponent,
-  //   canActivate: [AuthGuard]
-  // },
   {
     path: 'channels',
     children: [
       { path: '', component: UsersDashComponent},
       { path: ':channelId/posts', component: PostsComponent}
-    ]
+    ],
+    canActivate: [LoginGuard]
   },
   {
     path: '404',

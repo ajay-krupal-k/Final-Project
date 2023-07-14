@@ -1,6 +1,6 @@
 <div class="flex flex-row justify-between">
     <h2 mat-dialog-title>
-        Edit User
+        {{ this.isUpdateForm ? 'Edit User' : 'Invite User'}}
     </h2>
     <mat-dialog-actions align="end">
         <button mat-button mat-dialog-close class="font-medium text-red-600 hover:text-red-400">Cancel</button>
