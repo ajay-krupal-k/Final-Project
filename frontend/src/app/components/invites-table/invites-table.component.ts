@@ -23,8 +23,6 @@ export class InvitesTableComponent implements OnInit {
     this.dashboardService.getInvites()
       .subscribe(response => {
         this.dataSource = response
-        this.dataSource = this.dataSource.slice()
-        console.log('After Update',this.dataSource)
       }, error => {
         console.log(error)
       })

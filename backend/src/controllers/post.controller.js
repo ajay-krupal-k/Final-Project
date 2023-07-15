@@ -72,7 +72,8 @@ const updatePost = async (req, res) => {
         }
 
         try {
-            const post = await Post.updateOne({ _id: new ObjectId(id) }, { $set: updates })
+            await Post.updateOne({ _id: new ObjectId(id) }, { $set: updates })
+            const post = await Post.findOne({_id: new ObjectId(id)})
             res.status(200).json(post)
         } catch (error) {
             res.status(400).json({ error: error.message })

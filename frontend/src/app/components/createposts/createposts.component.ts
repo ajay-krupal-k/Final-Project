@@ -34,7 +34,6 @@ export class CreatepostsComponent implements OnInit {
 
   onSubmit() {
     if (this.isUpdateForm) {
-      this.isUpdateForm = false
       this.formValue = {
         _id: this.post?._id,
         title: this.postTitle,
