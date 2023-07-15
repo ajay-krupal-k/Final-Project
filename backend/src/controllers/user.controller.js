@@ -24,15 +24,15 @@ const getUser = async (req, res) => {
         return res.status(404).json({ error: 'User does not exist' })
     }
 
-    const user = await User.findById(id)
+    // const user = await User.findById(id)
 
-    await user.populate('usraccess')
+    // await user.populate('usraccess')
 
-    req.access = user.usraccess[0].access
-    req.permissions = user.usraccess[0].permissions
+    // req.access = user.usraccess[0].access
+    // req.permissions = user.usraccess[0].permissions
 
-    console.log(user.usraccess[0].access)
-    console.log(user.usraccess[0].permissions)
+    // console.log(user.usraccess[0].access)
+    // console.log(user.usraccess[0].permissions)
 
     if (!user) {
         return res.status(404).json({ error: 'User does not exist' })

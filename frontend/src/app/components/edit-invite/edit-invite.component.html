@@ -27,7 +27,7 @@
                     <input type="checkbox" name="channelName" [value]="channel._id"
                         [checked]="this.channelValues.includes(channel._id)"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-1"
-                        (change)="onCheckboxChange($event,'channels')">
+                        (change)="onChannelsChange($event)">
                     <label [for]="channel._id"
                         class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{
                         channel.name }}</label>
@@ -41,7 +41,7 @@
                     <label class="mt-2 mr-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                         <input type="checkbox" [value]="data.value" [checked]="permissionsValues.includes(data.value)"
                             class="h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-1"
-                            (change)="onCheckboxChange($event,'permissions')" />
+                            (change)="onPermissionsChange($event)" />
                         {{data.name}}
                     </label>
                 </div>

@@ -23,6 +23,8 @@ export class InvitesTableComponent implements OnInit {
     this.dashboardService.getInvites()
       .subscribe(response => {
         this.dataSource = response
+        this.dataSource = this.dataSource.slice()
+        console.log('After Update',this.dataSource)
       }, error => {
         console.log(error)
       })
@@ -58,15 +60,20 @@ export class InvitesTableComponent implements OnInit {
 
   updateInvite(updatedInvite: Invite) {
     this.dashboardService.updateInvites(updatedInvite).subscribe(response => {
-      const updatedIndex = this.dataSource.findIndex(invite => invite._id === updatedInvite['_id'])
+
+      console.log('Response from Update controller', response)
+      const updatedIndex = this.dataSource.findIndex(invite => invite._id === response._id)
 
       if (updatedIndex !== -1) {
-        this.dataSource[updatedIndex].name = updatedInvite.name
-        this.dataSource[updatedIndex].email = updatedInvite.email
-        this.dataSource[updatedIndex].channels = updatedInvite.channels.map(channel => ({
+        console.log('Index Found')
+        this.dataSource[updatedIndex].name = response.name
+        this.dataSource[updatedIndex].email = response.email
+        this.dataSource[updatedIndex].channels = response.channels.map(channel => ({
+          _id: channel._id,
           name: channel.name,
           description: channel.description
         }))
+        console.log('Updated Channels',this.dataSource[updatedIndex].channels)
         this.dataSource[updatedIndex].permissions = updatedInvite.permissions
       }
     })

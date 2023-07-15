@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
 import { Channels } from 'src/app/channels';
 import { Invite } from 'src/app/invites';
 import { DashboardService } from 'src/app/services/dashboard.service';
@@ -64,37 +63,72 @@ export class EditInviteComponent implements OnInit {
     }
   }
 
-  onCheckboxChange(e: any, formName: string) {
-    if (formName === 'channels') {
-      const channelsArray: FormArray = this.form.get('channelsArray') as FormArray;
-      if (e.target.checked) {
-        channelsArray.push(new FormControl(e.target.value));
-      } else {
-        let i: number = 0;
-        channelsArray.controls.forEach((item: any) => {
-          if (item.value == e.target.value) {
-            channelsArray.removeAt(i);
-            return;
-          }
-          i++;
-        });
-      }
+  onChannelsChange(e: any) {
+    const channelsArray: FormArray = this.form.get('channelsArray') as FormArray;
+    if (e.target.checked) {
+      channelsArray.push(new FormControl(e.target.value));
     } else {
-      const checkArray: FormArray = this.form.get('checkArray') as FormArray;
-      if (e.target.checked) {
-        checkArray.push(new FormControl(e.target.value));
-      } else {
-        let i: number = 0;
-        checkArray.controls.forEach((item: any) => {
-          if (item.value == e.target.value) {
-            checkArray.removeAt(i);
-            return;
-          }
-          i++;
-        });
-      }
+      let i: number = 0;
+      channelsArray.controls.forEach((item: any) => {
+        if (item.value == e.target.value) {
+          channelsArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
     }
   }
+
+  onPermissionsChange(e: any) {
+    const checkArray: FormArray = this.form.get('checkArray') as FormArray;
+    if (e.target.checked) {
+      checkArray.push(new FormControl(e.target.value));
+    } else {
+      let i: number = 0;
+      checkArray.controls.forEach((item: any) => {
+        if (item.value == e.target.value) {
+          checkArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+  }
+
+  // onCheckboxChange(e: any, formName: string) {
+  //   console.log('On Checkbox Change')
+  //   console.log('e Values',e)
+  //   console.log('formName value',formName)
+  //   if (formName === 'channels') {
+  //     const channelsArray: FormArray = this.form.get('channelsArray') as FormArray;
+  //     if (e.target.checked) {
+  //       channelsArray.push(new FormControl(e.target.value));
+  //     } else {
+  //       let i: number = 0;
+  //       channelsArray.controls.forEach((item: any) => {
+  //         if (item.value == e.target.value) {
+  //           channelsArray.removeAt(i);
+  //           return;
+  //         }
+  //         i++;
+  //       });
+  //     }
+  //   } else {
+  //     const checkArray: FormArray = this.form.get('checkArray') as FormArray;
+  //     if (e.target.checked) {
+  //       checkArray.push(new FormControl(e.target.value));
+  //     } else {
+  //       let i: number = 0;
+  //       checkArray.controls.forEach((item: any) => {
+  //         if (item.value == e.target.value) {
+  //           checkArray.removeAt(i);
+  //           return;
+  //         }
+  //         i++;
+  //       });
+  //     }
+  //   }
+  // }
 
   submitForm() {
 
