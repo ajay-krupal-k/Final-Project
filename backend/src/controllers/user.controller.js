@@ -3,6 +3,12 @@ const Invite = require('../models/invite.model')
 const mongoose = require('mongoose')
 const { ObjectId } = require('mongodb')
 
+const currentUser = async (req, res) => {
+    const currentUser = req.user
+
+    res.status(200).json(currentUser)
+}
+
 // GET all users
 const getUsers = async (req, res) => {
     const users = await User.find({})
@@ -147,5 +153,6 @@ module.exports = {
     deleteUser,
     loginUser,
     logoutUser,
-    logoutAll
+    logoutAll,
+    currentUser
 }

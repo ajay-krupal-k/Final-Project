@@ -1,6 +1,7 @@
 const express = require('express')
 
 const {
+    currentUser,
     createUser, 
     loginUser,
     logoutUser,
@@ -10,6 +11,8 @@ const auth = require('../middleware/auth.middleware')
 const invite = require('../middleware/invite.middleware')
 
 const router = express.Router()
+
+router.get("/currentuser", auth, currentUser)
 
 router.post("/register", invite, createUser)
 

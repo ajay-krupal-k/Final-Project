@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const mongoose = require('mongoose')
 const { ObjectId } = require('mongodb')
-const postmark = require("postmark");
+const postmark = require("postmark")
 
 const Invite = require('../models/invite.model')
 const User = require('../models/user.model')
@@ -39,14 +39,15 @@ const createInvite = async (req, res) => {
         const invite = await Invite.create({ name, email, status, access, permissions, channels })
         const token = await invite.generateToken()
         const createdInvite = await invite.populate('channels')
-        const action_url = `http://localhost:5000/register?token=${token}`
+        const action_url = `http://localhost:4200/register?token=${token}`
 
         client.sendEmailWithTemplate({
-            "From": "cajig23354@extemer.com",
-            "To": email,
+            "From": "ajay.krupal@loyalytics.in",
+            "To": "ajay.krupal@loyalytics.in",
+            // "To": email,
             "TemplateAlias": "user-invitation",
             "TemplateModel": {
-                "product_url": "http://localhost:5000/login",
+                "product_url": "http://localhost:4200/login",
                 "product_name": "Administrator App",
                 "name": name,
                 "action_url": action_url,

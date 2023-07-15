@@ -88,7 +88,7 @@ const deleteChannel = async (req, res) => {
     }
 
     try {
-        const channel = await Channel.deleteOne({ _id: new ObjectId(id) })
+        const channel = await Channel.deleteOne({ _id: id })
         res.status(200).json(channel)
     } catch (error) {
         res.status(404).json({ error: error.message })
