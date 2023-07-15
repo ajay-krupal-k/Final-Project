@@ -5,11 +5,14 @@ const {
     getInvite,
     createInvite,
     updateInvite,
-    deleteInvite
+    deleteInvite,
+    getPermissions
 } = require('../controllers/invite.controller')
 const auth = require('../middleware/auth.middleware')
 const admin = require('../middleware/role.middleware')
 const router = express.Router()
+
+router.get("/permissions", auth, getPermissions)
 
 router.get("/", auth, admin, getInvites)
 

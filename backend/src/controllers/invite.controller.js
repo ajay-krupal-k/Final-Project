@@ -5,7 +5,6 @@ const { ObjectId } = require('mongodb')
 const postmark = require("postmark")
 
 const Invite = require('../models/invite.model')
-const User = require('../models/user.model')
 
 const client = new postmark.ServerClient(process.env.API_KEY);
 
@@ -96,10 +95,17 @@ const deleteInvite = async (req, res) => {
 
 }
 
+const getPermissions = async (req,res) => {
+    const currentUser = await Invite.findOne({userId: req.user._id})
+
+    res.status(200).send(currentUser.permissions)
+}
+
 module.exports = {
     getInvites,
     getInvite,
     createInvite,
     updateInvite,
-    deleteInvite
+    deleteInvite,
+    getPermissions
 }

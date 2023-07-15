@@ -53,7 +53,6 @@ export class EditInviteComponent implements OnInit {
       this.isUpdateForm = true;
 
       this.form = this.fb.group({
-        _id: this.data._id,
         fullName: this.fb.control(name, [Validators.required]),
         userEmail: this.fb.control(email, [Validators.required]),
         channelsArray: this.fb.array(channels.map(val => val._id), [Validators.required]),
@@ -63,25 +62,6 @@ export class EditInviteComponent implements OnInit {
       this.channelValues = this.form.value.channelsArray
       this.permissionsValues = this.form.value.checkArray
     }
-
-    // console.log('Invite Details', typeof this.inviteDetails)
-    // if (Object.keys(this.inviteDetails).length !== 0) {
-    //   const { name, email, channels, permissions } = this.inviteDetails
-
-    //   console.log('Channels IDs', this.inviteDetails._id)
-    //   this.isUpdateForm = true;
-
-    //   this.form = this.fb.group({
-    //     _id: this.inviteDetails._id,
-    //     fullName: this.fb.control(name, [Validators.required]),
-    //     userEmail: this.fb.control(email, [Validators.required]),
-    //     channelsArray: this.fb.array(channels.map(val => val._id), [Validators.required]),
-    //     checkArray: this.fb.array(permissions, [Validators.required])
-    //   })
-
-    //   this.channelValues = this.form.value.channelsArray
-    //   this.permissionsValues = this.form.value.checkArray
-    // }
   }
 
   onCheckboxChange(e: any, formName: string) {
@@ -101,9 +81,6 @@ export class EditInviteComponent implements OnInit {
       }
     } else {
       const checkArray: FormArray = this.form.get('checkArray') as FormArray;
-      if (this.permissionsValues.length !== 0) {
-        checkArray.push(new FormControl(this.permissionsValues))
-      }
       if (e.target.checked) {
         checkArray.push(new FormControl(e.target.value));
       } else {
@@ -120,13 +97,24 @@ export class EditInviteComponent implements OnInit {
   }
 
   submitForm() {
-    // console.log(this.form.value);
 
     if (this.isUpdateForm) {
-      this.isUpdateForm = false
-      this.onUpdateInvite.emit(this.form.value)
+      console.log('Update form')
+      const invite = {
+        _id: this.data._id,
+        name: this.form.value.fullName,
+        email: this.form.value.userEmail,
+        channels: this.form.value.channelsArray,
+        permissions: this.form.value.checkArray
+      }
+
+      console.log('Update Form Values', invite)
+
+      this.onUpdateInvite.emit(invite)
       return;
     }
+
+    console.log('create form')
 
     const invite = {
       name: this.form.value.fullName,
@@ -139,27 +127,4 @@ export class EditInviteComponent implements OnInit {
 
     this.form.reset()
   }
-
-  // submitForm(): Invite {
-  //   // console.log(this.form.value);
-
-  //   if (this.isUpdateForm) {
-  //     // this.onUpdateInvite.emit(this.form.value)
-  //     return this.form.value;
-  //   }
-
-  //   const invite = {
-  //     name: this.form.value.fullName,
-  //     email: this.form.value.userEmail,
-  //     channels: this.form.value.channelsArray,
-  //     permissions: this.form.value.checkArray
-  //   }
-
-  //   return invite
-
-  //   // this.onCreateInvite.emit(invite)
-
-  //   this.form.reset()
-  // }
-
 }

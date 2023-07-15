@@ -27,9 +27,11 @@ export class LoginComponent {
         console.log(response.role)
         if(response.role === 'admin'){
           this.router.navigate(['/dashboard'])
+          return;
         }
         else {
           this.router.navigate(['/channels'])
+          return;
         }
         console.log('Logged In', response)
       }, error => {

@@ -30,18 +30,18 @@ export class DashboardService {
     )
   }
 
-  updateInvites(invite: Record<string, any>): Observable<Invite>{
-    const updateInviteURL = `${environment.apiURL}/invites/${invite['_id']}`
+  updateInvites(invite: Invite): Observable<Invite>{
+    const updateInviteURL = `${environment.apiURL}/invites/${invite._id}`
 
-    console.log('Within Service',invite['fullName'])
+    console.log('Within Service',invite.name)
 
     return this.http.patch<Invite>(
       updateInviteURL,
       {
-        name: invite['fullName'],
-        email: invite['userEmail'],
-        channels: invite['channelsArray'],
-        permissions: invite['checkArray']
+        name: invite.name,
+        email: invite.email,
+        channels: invite.channels,
+        permissions: invite.permissions
       }
     )
   }

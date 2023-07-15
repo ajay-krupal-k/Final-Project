@@ -56,18 +56,18 @@ export class InvitesTableComponent implements OnInit {
     })
   }
 
-  updateInvite(updatedInvite: Record<string, any>) {
+  updateInvite(updatedInvite: Invite) {
     this.dashboardService.updateInvites(updatedInvite).subscribe(response => {
       const updatedIndex = this.dataSource.findIndex(invite => invite._id === updatedInvite['_id'])
 
       if (updatedIndex !== -1) {
-        this.dataSource[updatedIndex].name = updatedInvite['fullName']
-        this.dataSource[updatedIndex].email = updatedInvite['userEmail']
-        this.dataSource[updatedIndex].channels = response.channels.map(channel => ({
+        this.dataSource[updatedIndex].name = updatedInvite.name
+        this.dataSource[updatedIndex].email = updatedInvite.email
+        this.dataSource[updatedIndex].channels = updatedInvite.channels.map(channel => ({
           name: channel.name,
           description: channel.description
         }))
-        this.dataSource[updatedIndex].permissions = updatedInvite['checkArray']
+        this.dataSource[updatedIndex].permissions = updatedInvite.permissions
       }
     })
   }
