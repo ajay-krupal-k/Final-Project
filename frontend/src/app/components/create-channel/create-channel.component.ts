@@ -11,8 +11,6 @@ export class CreateChannelComponent {
   @Output() onCreateChannel: EventEmitter<Channels> = new EventEmitter();
   channelName!: string;
   channelDesc!: string;
-  @Input() successMsg!: string;
-  @Input() errorMsg!: string;
 
 
   onSubmit(form: NgForm){

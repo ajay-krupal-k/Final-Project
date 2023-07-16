@@ -46,7 +46,7 @@ export class ChannelsTableComponent implements OnInit {
     })
   }
 
-  openCreateDialog(element?: Channels){
+  openCreateDialog(){
     const dialogRef = this.dialog.open(CreateChannelComponent)
 
     dialogRef.componentInstance.onCreateChannel.subscribe(response => {

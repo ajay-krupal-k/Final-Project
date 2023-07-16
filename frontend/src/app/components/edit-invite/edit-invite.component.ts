@@ -38,7 +38,6 @@ export class EditInviteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.dashboardService.getChannels()
       .subscribe(response => {
         this.channels = response
