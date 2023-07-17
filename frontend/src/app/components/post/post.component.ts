@@ -10,11 +10,6 @@ import { DeleteWarningComponent } from '../delete-warning/delete-warning.compone
   styleUrls: ['./post.component.css']
 })
 export class PostComponent {
-  // @Input() postTitle!: string;
-  // @Input() postDescription!: string;
-  // @Input() postId!: string;
-  // @Input() postCreatedOn!: string;
-
   @Input() post!: Post;
   @Input() permissions!: Array<any>;
   @Output() postUpdates: EventEmitter<Post> = new EventEmitter<Post>();

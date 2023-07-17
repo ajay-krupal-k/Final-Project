@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, Inject, OnInit, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Post } from 'src/app/post';
-import { DashboardService } from 'src/app/services/dashboard.service';
 
 @Component({
   selector: 'app-createposts',
@@ -11,9 +9,6 @@ import { DashboardService } from 'src/app/services/dashboard.service';
 })
 export class CreatepostsComponent implements OnInit {
   @Output() onCreatePosts: EventEmitter<Post> = new EventEmitter();
-  // @Input() modalId!: string;
-  // @Input() title!: string;
-  // @Input() description!: string;
   @Output() onUpdatePosts: EventEmitter<Post> = new EventEmitter();
 
   postTitle!: string;

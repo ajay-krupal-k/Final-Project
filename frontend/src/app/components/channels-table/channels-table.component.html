@@ -1,63 +1,3 @@
-<!-- <div class="mb-3 flex justify-end w-full">
-    <a type="button" data-modal-target="createChannel" data-modal-toggle="createChannel"
-        class="cursor-pointer block font-medium text-blue-600 hover:text-blue-500" type="button">
-        <span class="inline-block">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
-            </svg>
-        </span>
-        Create Channel
-    </a>
-    <app-create-channel id="createChannel" tabindex="-1" aria-hidden="true"
-        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
-        (onCreateChannel)="createChannel($event)" [successMsg]="successMsg" [errorMsg]="errorMsg"></app-create-channel>
-</div>
-
-<div class="relative overflow-x-auto sm:rounded-lg">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Channel Name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Created By
-                </th>
-                <th scope="col" class="px-6 py-3 w-50">
-                    Created On
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Action
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let channel of channels; let ind = index"
-                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{channel.name}}
-                </th>
-                <td class="px-6 py-4">
-                    {{channel.createdBy?.email}}
-                </td>
-                <td class="px-6 py-4">
-                    {{channel.createdAt | date}}
-                </td>
-                <td class="z-0 px-6 py-4">
-                    <button [attr.data-modal-target]="'channel'+ind" [attr.data-modal-toggle]="'channel'+ind" type="button"
-                        class="z-50 block font-medium text-blue-600 cursor-pointer hover:text-blue-500" type="button">
-                        Delete
-                    </button>
-                    <app-delete-warning [id]="'channel'+ind" tabindex="-1" [channelId]="'channel'+ind"
-                        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"></app-delete-warning>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div> -->
-
 <div>
     <div class="mt-3 mb-3 flex justify-end font-medium text-blue-600 hover:text-blue-400">
         <button mat-button (click)="openCreateDialog()">
@@ -73,22 +13,16 @@
     </div>
     <table mat-table [dataSource]="channels" class="mat-elevation-z0">
 
-        <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-
-        <!-- Position Column -->
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
-        <!-- Name Column -->
         <ng-container matColumnDef="createdBy">
             <th mat-header-cell *matHeaderCellDef> Created By </th>
             <td mat-cell *matCellDef="let element"> {{element.createdBy.email}} </td>
         </ng-container>
 
-        <!-- Weight Column -->
         <ng-container matColumnDef="createdAt">
             <th mat-header-cell *matHeaderCellDef> Created On </th>
             <td mat-cell *matCellDef="let element"> {{element.createdAt | date}} </td>

@@ -15,8 +15,6 @@ export class InvitesTableComponent implements OnInit {
   columnsToDisplay = [...this.displayedColumns, 'action']
   dataSource: Invite[] = [];
 
-  // invites: Invite[] = [];
-
   constructor(private dashboardService: DashboardService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
