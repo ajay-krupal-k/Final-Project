@@ -24,7 +24,9 @@ export class PostComponent {
 
     dialogRef.componentInstance.onUpdatePosts.subscribe(response => {
       this.postUpdates.emit(response)
+      dialogRef.close()
     })
+
   }
 
   openDeleteDialog(post: Post) {
@@ -34,6 +36,7 @@ export class PostComponent {
 
     dialogRef.componentInstance.onDeletePost.subscribe(response => {
       this.postDelete.emit(response)
+      dialogRef.close()
     })
   }
 

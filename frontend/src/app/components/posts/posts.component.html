@@ -1,4 +1,9 @@
 <div class="w-full h-full p-10">
+    <div class="mb-3 text-blue-600">
+        <a routerLink="/channels" class="hover:text-blue-400">
+            &#8592; Go Back
+        </a>
+    </div>
     <div *ngIf="permissions.includes('create')" class="flex justify-between">
         <h1 class="text-2xl font-medium mb-3 text-gray-500">{{ channelName }}</h1>
         <button mat-button (click)="openDialog()" class="font-medium text-md text-blue-600 hover:text-blue-400">

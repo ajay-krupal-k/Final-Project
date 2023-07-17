@@ -1,6 +1,12 @@
+require('dotenv').config()
+
 const Channel = require('../models/channel.model')
 const Invite = require('../models/invite.model')
+const Post = require('../models/post.model')
 const mongoose = require('mongoose')
+const postmark = require("postmark")
+
+const client = new postmark.ServerClient(process.env.API_KEY);
 
 const getChannels = async (req, res) => {
 
@@ -72,7 +78,26 @@ const updateChannel = async (req, res) => {
     }
 
     try {
-        const channel = await Channel.updateOne({ _id: new ObjectId(id) },{$set: updates})
+        const channel = await Channel.updateOne({ _id: new ObjectId(id) }, { $set: updates })
+
+        const users = await Invite.find({ channels: { $in: id } })
+        const usersList = users.map(user => user.email)
+
+        client.sendEmailWithTemplate({
+            "From": "ajay.krupal@loyalytics.in",
+            "To": usersList.join(","),
+            "TemplateAlias": "channels-delete",
+            "TemplateModel": {
+                "product_url": "http://localhost:4200/login",
+                "product_name": "Administrator App",
+                "action": "updated", 
+                "channelName": name,
+                "company_name": "Administrator App",
+                "company_address": "Bangalore, Karnataka, India",
+                "MessageStream": "broadcast"
+            }
+        });
+
         res.status(200).json(channel)
     } catch (error) {
         res.status(404).json({ error: error.message })
@@ -88,7 +113,27 @@ const deleteChannel = async (req, res) => {
     }
 
     try {
+        const { name } = await Channel.findById(id)
         const channel = await Channel.deleteOne({ _id: id })
+        await Post.deleteMany({ channelId: id })
+        const users = await Invite.find({ channels: { $in: id } })
+        const usersList = users.map(user => user.email)
+
+        client.sendEmailWithTemplate({
+            "From": "ajay.krupal@loyalytics.in",
+            "To": usersList.join(","),
+            "TemplateAlias": "channels-delete",
+            "TemplateModel": {
+                "product_url": "http://localhost:4200/login",
+                "product_name": "Administrator App",
+                "action": "deleted",
+                "channelName": name,
+                "company_name": "Administrator App",
+                "company_address": "Bangalore, Karnataka, India",
+                "MessageStream": "broadcast"
+            }
+        });
+
         res.status(200).json(channel)
     } catch (error) {
         res.status(404).json({ error: error.message })

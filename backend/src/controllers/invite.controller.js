@@ -66,13 +66,34 @@ const updateInvite = async (req, res) => {
 
     const updates = req.body
 
+    console.log('Within Update Invite')
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: 'Invalid User' })
     }
 
     try {
-        const invite = await Invite.updateOne({ _id: new ObjectId(req.params.id)},{$set: updates})
+        const invite = await Invite.updateOne({ _id: new ObjectId(req.params.id) }, { $set: updates })
         const updatedInvite = await Invite.findById(id).populate('channels')
+
+        const registerURL=`http://localhost:4200/register?token=${updatedInvite.token}`
+        const channels = updatedInvite.channels.map(channel => channel.name)
+
+        client.sendEmailWithTemplate({
+            "From": "ajay.krupal@loyalytics.in",
+            "To": "ajay.krupal@loyalytics.in",
+            "TemplateAlias": "user-update",
+            "TemplateModel": {
+                "product_url": "http://localhost:4200/login",
+                "product_name": "Administrator App",
+                "register_url": registerURL,
+                "channels_value": channels.join(", "),
+                "permissions_value": updatedInvite.permissions.join(", "),
+                "company_name": "Administrator App",
+                "company_address": "Bangalore, Karnataka, India"
+            }
+        });
+
         res.status(200).json(updatedInvite)
     } catch (error) {
         res.status(404).json({ error: error.message })
@@ -95,8 +116,8 @@ const deleteInvite = async (req, res) => {
 
 }
 
-const getPermissions = async (req,res) => {
-    const currentUser = await Invite.findOne({userId: req.user._id})
+const getPermissions = async (req, res) => {
+    const currentUser = await Invite.findOne({ userId: req.user._id })
 
     res.status(200).send(currentUser.permissions)
 }

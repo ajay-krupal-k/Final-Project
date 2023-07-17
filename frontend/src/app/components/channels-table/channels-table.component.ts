@@ -36,6 +36,7 @@ export class ChannelsTableComponent implements OnInit {
 
     dialogRef.componentInstance.onDeletePost.subscribe(response => {
       this.deleteChannel(response)
+      dialogRef.close()
     })
   }
 
@@ -51,6 +52,7 @@ export class ChannelsTableComponent implements OnInit {
 
     dialogRef.componentInstance.onCreateChannel.subscribe(response => {
       this.createChannel(response)
+      dialogRef.close()
     })
 
   }
@@ -67,29 +69,4 @@ export class ChannelsTableComponent implements OnInit {
         console.log(error)
       })
     }
-
-  // ngOnInit(): void {
-  //   this.dashboardService.getChannels().subscribe(response => {
-  //     this.channels = response
-  //   }, error => {
-  //     console.log(error)
-  //   })
-  // }
-
-  // createChannel(channel: Channels) {
-  //   this.dashboardService.createChannel(channel).subscribe(response => {
-  //     this.errorMsg = ''
-  //     this.successMsg = 'Created Channel Successfully!!!'
-  //     this.channels.push(response)
-  //   }, error => {
-  //     this.successMsg = ''
-  //     this.errorMsg = 'Error creating channel. Check name of channel!!'
-  //     console.log(error)
-  //   })
-  // }
-
-  // deleteLog(channelName: string) {
-  //   console.log('clicked', channelName)
-  // }
-
 }

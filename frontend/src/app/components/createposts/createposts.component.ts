@@ -50,30 +50,4 @@ export class CreatepostsComponent implements OnInit {
     this.postDescription = ''
   }
 
-  // onSubmit() {
-  //   console.log('post',this.post?.title && this.post?.description)
-  //   if (this.post?.title.length !== 0) {
-  //     console.log('Create inside if')
-  //     this.formValue = {
-  //       _id: this.post?._id,
-  //       title: this.postTitle,
-  //       description: this.postDescription
-  //     }
-  //     this.onUpdatePosts.emit(this.formValue)
-  //     return;
-  //   }
-
-  //   console.log('Create outside if')
-
-  //   const formValue = {
-  //     title: this.postTitle,
-  //     description: this.postDescription
-  //   }
-
-  //   this.onCreatePosts.emit(formValue)
-
-  //   this.postTitle = ''
-  //   this.postDescription = ''
-  // }
-
 }

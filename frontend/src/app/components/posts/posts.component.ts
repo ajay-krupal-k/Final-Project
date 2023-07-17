@@ -45,7 +45,9 @@ export class PostsComponent implements OnInit {
 
     dialogRef.componentInstance.onCreatePosts.subscribe(response => {
       this.createPosts(response)
+      dialogRef.close()
     })
+
   }
 
   createPosts(post: Post) {
